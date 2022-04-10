@@ -1,0 +1,21 @@
+.emp-card{
+    border: none;
+    margin-bottom: 200px;
+
+    .form-control, .form-select{
+        border: none;
+        border-bottom: 1px solid $secondary !important;
+        border-radius: 0px;
+        padding: 5px 1px;
+        transition: .3s;
+
+        &:focus{
+            box-shadow: none;
+            border-bottom-color: $primary;
+        }
+    }
+
+    .form-control[readonly]{
+        background-color: transparent;
+    }
+}
