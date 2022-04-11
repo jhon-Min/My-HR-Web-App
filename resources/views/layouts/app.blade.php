@@ -13,9 +13,11 @@
 
 <body id="body-pd" class="bg-light">
 
-    @include('layouts.header')
+    @auth
+        @include('layouts.header')
 
-    @include('layouts.sidebar')
+        @include('layouts.sidebar')
+    @endauth
 
     <!--Container Main start-->
     <div class="min-vh-100">
@@ -26,9 +28,20 @@
     <!--Container Main End-->
 
     <script src="{{ asset('js/app.js') }}"></script>
+
+    {{-- Laravel Js Validation --}}
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     @yield('scripts')
+
+    @auth
+        @include('layouts.toast')
+
+        @include('layouts.create-alert')
+    @endauth
 </body>
 
 </html>

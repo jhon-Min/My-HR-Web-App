@@ -28,9 +28,14 @@
                 </a>
             </div>
         </div>
-        <a href="#" class="nav_link">
+        <a href="{{ route('logout') }}" class="nav_link" onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
             <i class="fa-solid fa-right-from-bracket text-danger"></i>
             <span class="text-danger">SignOut</span>
         </a>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
     </nav>
 </div>

@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\HeadOfDepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +26,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->group(function () {
     Route::resource('/employee', EmployeeController::class);
+
+    Route::resource('/department', DepartmentController::class);
+
+    Route::resource('/head-of-department', HeadOfDepController::class);
 });

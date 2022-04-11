@@ -12,13 +12,12 @@
                 <span class="fs-4 ms-1 text-muted">|</span>
             </div>
             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Employees</a></li>
+                <x-bread-crumb>
+                    <li class="breadcrumb-item"><a href="{{ route('employee.index') }}">Employees</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Add Employee
                     </li>
-                </ol>
+                </x-bread-crumb>
             </nav>
         </div>
 
@@ -33,67 +32,77 @@
                         </button>
                     </div>
 
-                    <form action="">
+                    <form action="{{ route('employee.store') }}" id="createForm" method="POST">
+                        @csrf
                         <div class="row g-5">
                             <div class="col-12 col-md-6">
                                 <div class="mb-5">
-                                    <input type="text" class="form-control" placeholder="Employee ID" required />
+                                    <input type="text" class="form-control" name="employee_id"
+                                        value="{{ old('employee_id') }}" placeholder="Employee ID" required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="email" class="form-control" placeholder="Email" required />
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                        placeholder="Email" required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="password" class="form-control" placeholder="Password" required />
+                                    <input type="password" class="form-control" name="password" placeholder="Password"
+                                        required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="text" class="form-control" placeholder="NRC" required />
+                                    <input type="text" class="form-control" name="nrc_number"
+                                        value="{{ old('nrc_number') }}" placeholder="NRC" required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="text" class="form-control bd" placeholder="Birth Date">
+                                    <input type="text" class="form-control bd" name="birthday"
+                                        value="{{ old('birthday') }}" placeholder="Birth Date">
                                 </div>
 
                                 <div class="">
-                                    <select class="form-select single-select" data-placeholder="Choose one thing">
+                                    <select class="form-select single-select" name="department"
+                                        data-placeholder="Choose Department">
                                         <option></option>
-                                        <option>Reactive</option>
-                                        <option>Solution</option>
-                                        <option>Conglomeration</option>
-                                        <option>Algoritm</option>
-                                        <option>Holistic</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="col-12 col-md-6">
                                 <div class="mb-5">
-                                    <input type="text" class="form-control" placeholder="Your Name" required />
+                                    <input type="text" class="form-control" name="name" value="{{ old('name') }}"
+                                        placeholder="Your Name" required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="number" class="form-control" placeholder="Phone" required />
+                                    <input type="number" class="form-control" name="phone" value="{{ old('phone') }}"
+                                        placeholder="Phone" required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="number" class="form-control" placeholder="Pin Code" required />
+                                    <input type="number" class="form-control" name="pin_code"
+                                        value="{{ old('pin_code') }}" placeholder="Pin Code" required />
                                 </div>
 
                                 <div class="mb-5">
-                                    <select class="form-select" data-placeholder="Choose one thing">
-                                        <option value="1">Male</option>
-                                        <option value="2">Female</option>
+                                    <select class="form-select" name="gender" data-placeholder="Choose one thing">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
                                     </select>
                                 </div>
 
                                 <div class="mb-5">
-                                    <input type="text" class="form-control doj" placeholder="Joining Date">
+                                    <input type="text" class="form-control doj" name="date_of_join"
+                                        value="{{ old('date_of_join') }}" placeholder="Joining Date">
                                 </div>
 
                                 <div class="">
-                                    <select class="form-select single-select" data-placeholder="Is Present?">
+                                    <select class="form-select single-select" name="is_present"
+                                        data-placeholder="Is Present?">
                                         <option></option>
                                         <option value="1">Yes</option>
                                         <option value="0">No</option>
@@ -102,7 +111,8 @@
                             </div>
 
                             <div class="">
-                                <select class="form-select select-custom-multiple" data-placeholder="Choose Role" multiple>
+                                <select class="form-select select-custom-multiple" name="roles[]"
+                                    data-placeholder="Choose Role" multiple>
                                     <option></option>
                                     <option>Reactive</option>
                                     <option>Solution</option>
@@ -113,7 +123,7 @@
                             </div>
 
                             <div class="form-group mb-4">
-                                <textarea class="form-control" rows="3" placeholder="Address"></textarea>
+                                <textarea class="form-control" rows="3" name="address" placeholder="Address">{{ old('address') }}</textarea>
                             </div>
 
                             <div class="text-center my-5">
@@ -129,6 +139,7 @@
 @endsection
 
 @section('scripts')
+    {!! JsValidator::formRequest('App\Http\Requests\StoreEmployee', '#createForm') !!}
     <script>
         $(".bd").flatpickr({
             maxDate: "today",

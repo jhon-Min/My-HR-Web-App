@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('name')
-    Employee Lists
+    Head Of Department
 @endsection
 
 @section('content')
-    <h1>employee</h1>
+    <h1>HOD page</h1>
 @endsection
