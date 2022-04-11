@@ -14,18 +14,33 @@
                         @csrf
 
                         <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" />
-                            <label for="floatingInput">Email address</label>
+                            <input type="number" class="form-control @error('phone') is-invalid @enderror" id="floatingInput"
+                                name="phone" value="{{ old('phone') }}" placeholder="name@example.com" required
+                                autofocus />
+                            <label for="floatingInput">Phone</label>
+                            @error('phone')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" />
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                name="password" id=" floatingPassword" placeholder="Password" required
+                                autocomplete="current-password" />
                             <label for="floatingPassword">Password</label>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
 
                         <div class="mb-5 d-flex justify-content-between">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                <input class="form-check-input" type="checkbox" name="remember" id="defaultCheck1"
+                                    {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label small text-muted" for="defaultCheck1">
                                     Remember me
                                 </label>
