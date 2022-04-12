@@ -8,21 +8,21 @@ $semi-light: #f3f6f9;
 $dark: #353c48;
 $border-radius: 0px;
 
-// Bootstrap
+// Bootstrap and Other
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~flatpickr/dist/flatpickr.min.css';
 @import '~select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css';
 @import "~sweetalert2/src/sweetalert2.scss";
 @import './select2.css';
+@import './datatable-b5.css';
 
+// Custom Scss
 @import './sidebar';
 @import './emp';
+@import './table';
 
 // ==== Global Css ====
-// .select2-container {
-//     border-bottom: 1px solid $secondary;
-// }
 
 .mb-7{
     margin-bottom: 70px;

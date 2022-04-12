@@ -7,12 +7,54 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreEmployee;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeController extends Controller
 {
     public function index()
     {
         return view('employee.index');
+    }
+
+    public function ssd(Request $request)
+    {
+        $employees = User::query();
+        return DataTables::of($employees)->
+            editColumn('is_present', function ($each) {
+                if ($each->is_present == 1) {
+                    return ' <span class="badge badge-pill badge-success p-2">Present</span>';
+                } else {
+                    return ' <span class="badge badge-pill badge-danger p-2">Leave</span>';
+                }
+            })
+            ->editColumn('updated_at', function ($each) {
+                return Carbon::parse($each->update_at)->format('Y-m-d H:i:s');
+            })
+            ->addColumn('plus-icon', function ($each) {
+                return null;
+            })
+            ->addColumn('role_name', function ($each) {
+                $output = "";
+                foreach ($each->roles as $role) {
+                    $output .= "<span class='badge badge-pill badge-primary m-1 p-2'>$role->name</span>";
+                }
+                return $output;
+            })
+            ->addColumn('action', function ($each) {
+                $edit = "";
+                $detail = "";
+                $del = "";
+
+                $edit = '<a href="' . route('employee.edit', $each->id) . '" class="btn btn-sm btn-info p-2 rounded mr-2"><i class="fa-solid fa-pen-to-square"></i></a>';
+
+                $detail = '<a href="' . route('employee.show', $each->id) . '" class="btn btn-sm btn-secondary p-2 rounded mr-2"><i class="fa-solid fa-circle-info"></i></a>';
+
+                $del = '<a href="#" class="btn btn-sm btn-danger p-2 rounded del-btn" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt"></i></a>';
+
+                return '<div class="action-icon">' . $edit . $detail . $del . '</div>';
+            })
+            ->rawColumns(['is_present', 'action', 'role_name'])
+            ->make(true);
     }
 
     public function create()
