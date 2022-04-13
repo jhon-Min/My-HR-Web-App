@@ -23,6 +23,9 @@ $border-radius: 0px;
 @import './table';
 
 // ==== Global Css ====
+.btn-sm{
+    font-size: 12px;
+}
 
 .mb-7{
     margin-bottom: 70px;
@@ -86,6 +89,10 @@ $border-radius: 0px;
 mark {
     background: orange;
     color: black;
+}
+
+.table > tbody{
+    font-size: 15px;
 }
 
 @media screen and (max-width: 767px) {

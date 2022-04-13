@@ -33,10 +33,12 @@
                     <table class="table table-hover table-striped w-100 py-3" id="dataTable">
                         <thead>
                             <th class="">Department</th>
-                            <th class="">Head Department</th>
+                            <th class="">Head.Dept</th>
                             <th class="">Phone</th>
-                            <th class="">Total Employees</th>
+                            <th class="">Email</th>
+                            <th class="">Employees</th>
                             <th class="no-sort">Control</th>
+                            <th class="">Start Date</th>
                             <th class="text-center hidden">Updated_at</th>
                         </thead>
                     </table>
@@ -64,12 +66,20 @@
                         name: 'phone',
                     },
                     {
+                        data: 'email',
+                        name: 'email',
+                    },
+                    {
                         data: 'total_employees',
                         name: 'total_employees',
                     },
                     {
                         data: 'action',
                         name: 'action',
+                    },
+                    {
+                        data: 'start_date',
+                        name: 'start_date',
                     },
                     {
                         data: 'updated_at',
