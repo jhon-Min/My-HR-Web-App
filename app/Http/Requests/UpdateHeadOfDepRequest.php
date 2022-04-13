@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateHeadOfDepRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateHeadOfDepRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +22,11 @@ class UpdateHeadOfDepRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
+        $id = $request->route('id');
         return [
-            //
+            "title" => "required|min:2"
         ];
     }
 }

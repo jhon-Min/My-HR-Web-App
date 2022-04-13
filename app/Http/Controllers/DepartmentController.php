@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\HeadOfDep;
+use App\Models\Department;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Http\Requests\UpdateDepartmentRequest;
-use App\Models\Department;
-use App\Models\HeadOfDep;
-use Carbon\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 
 class DepartmentController extends Controller
 {
@@ -18,6 +20,33 @@ class DepartmentController extends Controller
     public function index()
     {
         return view('department.index');
+    }
+
+    public function ssd(Request $request)
+    {
+        $departments = Department::query();
+        return DataTables::of($departments)
+            ->addColumn('action', function ($each) {
+                $edit = "";
+                $detail = "";
+                $del = "";
+
+                $edit = '<a href="'.route('department.edit', $each->id).'" class="btn btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+
+                $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn ms-2" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+
+                return '<div class="action-icon">' . $edit  . $del. '</div>';
+            })
+            ->addColumn('head_dep', function($each){
+                return $each->head_department ? $each->head_department->title : '-';
+            })
+            ->filterColumn('head_dep', function($query, $keyword){
+                $query->whereHas('head_department', function ($q) use ($keyword) {
+                    $q->where('title', 'like', "%$keyword%");
+                });
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
     /**
@@ -41,7 +70,7 @@ class DepartmentController extends Controller
     {
        $department = new Department();
        $department->name = $request->name;
-       $department->head_of_dep = $request->head_of_dep;
+       $department->head_department_id = $request->head_of_dep;
        $department->phone = $request->phone;
        $department->email = $request->email;
        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');;
@@ -70,7 +99,8 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        $hods = HeadOfDep::orderBy('title')->get();
+        return view('department.edit', compact('department', 'hods'));
     }
 
     /**
@@ -82,7 +112,14 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
-        //
+        $department->head_department_id = $request->head_of_dep;
+        $department->phone = $request->phone;
+        $department->email = $request->email;
+        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');;
+        $department->total_employees = $request->total;
+        $department->save();
+
+        return redirect()->route('department.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $department->name . ' is successfully updated']);
     }
 
     /**
@@ -93,6 +130,6 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        return $department->delete();
     }
 }

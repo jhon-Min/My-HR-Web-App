@@ -10,6 +10,10 @@
 
                 <x-menu-item link="{{ route('employee.index') }}" icon="fa-solid fa-users">Employees</x-menu-item>
 
+                <x-menu-item link="{{ route('head-of-department.index') }}" icon="fa-solid fa-building-columns">
+                    Head Of Departments
+                </x-menu-item>
+
                 <x-menu-item link="{{ route('department.index') }}" icon="fa-solid fa-building-user">Departments
                 </x-menu-item>
 

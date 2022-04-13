@@ -18,7 +18,7 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Auth::routes(['register' => false]);
+Auth::routes();
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/employee/datatable/ssd', [EmployeeController::class, 'ssd'])->name('employee.ssd');
 
     Route::resource('/department', DepartmentController::class);
+    Route::get('/department/datatable/ssd', [DepartmentController::class, 'ssd'])->name('department.ssd');
 
     Route::resource('/head-of-department', HeadOfDepController::class);
     Route::get('/head-of-department-table/ssd', [HeadOfDepController::class, 'ssd'])->name('head-dep.ssd');

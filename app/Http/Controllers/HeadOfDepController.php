@@ -29,9 +29,11 @@ class HeadOfDepController extends Controller
                 $detail = "";
                 $del = "";
 
-                $edit = "<a href='' class=' btn btn-success btn-sm rounded-circle'><i class='fa-solid fa-pen-to-square fw-light'></i></a>";
+                $edit = '<a href="'.route('head-of-department.edit', $each->id).'" class="btn btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
 
-                return '<div class="action-icon">' . $edit  . '</div>';
+                $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn ms-2" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+
+                return '<div class="action-icon">' . $edit  . $del. '</div>';
             })
             ->rawColumns(['action'])
             ->make(true);
@@ -79,9 +81,10 @@ class HeadOfDepController extends Controller
      * @param  \App\Models\HeadOfDep  $headOfDep
      * @return \Illuminate\Http\Response
      */
-    public function edit(HeadOfDep $headOfDep)
+    public function edit($id)
     {
-        //
+        $hod = HeadOfDep::findOrFail($id);
+        return view('head-department.edit', compact('hod'));
     }
 
     /**
@@ -93,7 +96,11 @@ class HeadOfDepController extends Controller
      */
     public function update(UpdateHeadOfDepRequest $request, HeadOfDep $headOfDep)
     {
-        //
+        $headOfDep->title = $request->title;
+        $headOfDep->save();
+
+        return redirect()->route('head-of-department.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $headOfDep->title . ' is successfully updated']);
+
     }
 
     /**
@@ -102,8 +109,9 @@ class HeadOfDepController extends Controller
      * @param  \App\Models\HeadOfDep  $headOfDep
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HeadOfDep $headOfDep)
+    public function destroy($id)
     {
-        //
+        $hod = HeadOfDep::findOrFail($id);
+        $hod->delete();
     }
 }

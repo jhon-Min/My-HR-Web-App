@@ -13,7 +13,7 @@ class UpdateDepartmentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            "name" => "required",
+            "phone" => "required",
+            "email" => "required",
+            "head_of_dep" => "required",
+            "start_date" => "required",
+            "total" => "required",
         ];
     }
 }

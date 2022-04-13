@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('name')
+@section('title')
     Add Department
 @endsection
 
@@ -13,7 +13,7 @@
             </div>
             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                 <x-bread-crumb>
-                    <li class="breadcrumb-item"><a href="{{ route('department.index') }}">Departments</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('head-of-department.index') }}">Departments</a></li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Add Department
                     </li>
