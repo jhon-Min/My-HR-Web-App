@@ -22,10 +22,13 @@
                     <span class="nav_name">Attendance</span>
                 </a>
 
-                <a href="#" class="nav_link">
-                    <i class="fa-solid fa-users-gear"></i>
-                    <span class="nav_name">Role</span>
-                </a>
+                <x-menu-item link="{{ route('role.index') }}" icon="fa-solid fa-users-gear">
+                    Roles
+                </x-menu-item>
+
+                <x-menu-item link="{{ route('permission.index') }}" icon="fa-solid fa-user-shield">
+                    Permissions
+                </x-menu-item>
             </div>
         </div>
         <a href="{{ route('logout') }}" class="nav_link" onclick="event.preventDefault();

@@ -1,27 +1,27 @@
 @extends('layouts.app')
 
 @section('title')
-    Head Of Department
+    Permission Lists
 @endsection
 
 @section('content')
     <div class="row">
         <div class="my-4 d-flex align-items-baseline">
             <div class="me-2">
-                <span class="fs-4">Head Of Departments</span>
+                <span class="fs-4">Permissions</span>
                 <span class="fs-4 ms-1 text-muted">|</span>
             </div>
             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                 <x-bread-crumb>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Head Of Departments
+                        Permission Lists
                     </li>
                 </x-bread-crumb>
             </nav>
         </div>
 
         <div class="mb-3">
-            <a href="{{ route('head-of-department.create') }}" class="btn btn-primary">
+            <a href="{{ route('permission.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-circle-plus me-1"></i>
                 Add
             </a>
@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <table class="table table-hover table-striped w-100 py-3" id="dataTable">
                         <thead>
-                            <th class="">Name</th>
+                            <th class="">Permission Name</th>
                             <th class="no-sort">Control</th>
                             <th class="text-center hidden">Updated_at</th>
                         </thead>
@@ -47,10 +47,10 @@
     <script>
         $(document).ready(function() {
             var table = $('#dataTable').DataTable({
-                ajax: '{{ route('head-dep.ssd') }}',
+                ajax: '{{ route('permission.ssd') }}',
                 columns: [{
-                        data: 'title',
-                        name: 'title'
+                        data: 'name',
+                        name: 'name'
                     },
                     {
                         data: 'action',
@@ -60,6 +60,9 @@
                         data: 'updated_at',
                         name: 'updated_at',
                     },
+                ],
+                order: [
+                    [2, "desc"]
                 ],
             });
 
@@ -80,7 +83,7 @@
                         Swal.fire("Deleted!", "Your file has been deleted.", "success");
                         $.ajax({
                             method: "DELETE",
-                            url: `/head-of-department/${id}`,
+                            url: `/permission/${id}`,
                         }).done(function(res) {
                             table.ajax.reload();
                         })

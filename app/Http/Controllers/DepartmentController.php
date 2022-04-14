@@ -29,6 +29,9 @@ class DepartmentController extends Controller
             ->addColumn('plus-icon', function ($each) {
                 return null;
             })
+            ->editColumn('start_date', function($each){
+                return Carbon::parse($each->start_date)->format('d.m.Y');
+            })
             ->addColumn('action', function ($each) {
                 $edit = "";
                 $detail = "";

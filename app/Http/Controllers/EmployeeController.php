@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreEmployee;
-use App\Http\Requests\UpdateEmployeeRequest;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\UpdateEmployeeRequest;
 
 class EmployeeController extends Controller
 {
@@ -61,7 +62,8 @@ class EmployeeController extends Controller
 
     public function create()
     {
-        return view('employee.create');
+        $roles = Role::orderBy('id', 'DESC')->get();
+        return view('employee.create', compact('roles'));
     }
 
     public function store(StoreEmployee $request)
