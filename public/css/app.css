@@ -13825,7 +13825,7 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
   --first-color-light: #afa5d9;
   --body-font: "Nunito", sans-serif;
   --normal-font-size: 1rem;
-  --z-fixed: 2001;
+  --z-fixed: 1001;
 }
 
 *,
@@ -14032,31 +14032,6 @@ a {
   background-color: transparent;
 }
 
-.btn-sm, .btn-group-sm > .btn {
-  font-size: 12px;
-}
-
-.mb-7 {
-  margin-bottom: 70px;
-}
-
-.mt-m-2 {
-  margin-top: -2px;
-}
-
-.emp-card .form-floating > label {
-  padding-left: 0px;
-}
-
-.daterangepicker, .flatpickr-calendar {
-  margin-top: -55px !important;
-  z-index: 2000 !important;
-}
-
-.file-upload-icon {
-  font-size: 50px;
-}
-
 .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
   display: inline-block;
 }
@@ -14074,6 +14049,10 @@ a {
 .dropzone {
   border: 1px solid #f1f2f7;
   background: #f1f2f7;
+}
+
+.file-upload-icon {
+  font-size: 50px;
 }
 
 .dataTables_filter .form-control {
@@ -14113,4 +14092,43 @@ div.dataTables_wrapper div.dataTables_paginate {
     justify-content: start !important;
     margin-top: 25px;
   }
+}
+.daterangepicker, .flatpickr-calendar {
+  margin-top: -55px !important;
+  z-index: 2000 !important;
+}
+
+.btn-sm, .btn-group-sm > .btn {
+  font-size: 12px;
+}
+
+.py-8 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.mb-7 {
+  margin-bottom: 70px;
+}
+
+.mt-m-2 {
+  margin-top: -2px;
+}
+
+.emp-card .form-floating > label {
+  padding-left: 0px;
+}
+
+.profile-img {
+  width: 125px;
+  margin-top: -68px;
+}
+
+.profile-btn {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 139px;
+  z-index: 1999;
 }

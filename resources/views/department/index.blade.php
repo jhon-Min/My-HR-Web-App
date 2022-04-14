@@ -30,8 +30,9 @@
         <div class="col-12">
             <div class="card shadow-sm dt-card">
                 <div class="card-body">
-                    <table class="table table-hover table-striped w-100 py-3" id="dataTable">
+                    <table class="table table-hover table-striped w-100 py-3 " id="dataTable">
                         <thead>
+                            <th class="no-sort"></th>
                             <th class="">Department</th>
                             <th class="">Head.Dept</th>
                             <th class="">Phone</th>
@@ -54,6 +55,11 @@
             var table = $('#dataTable').DataTable({
                 ajax: '{{ route('department.ssd') }}',
                 columns: [{
+                        data: 'plus-icon',
+                        name: 'plus-icon',
+                        class: 'text-center'
+                    },
+                    {
                         data: 'name',
                         name: 'name'
                     },

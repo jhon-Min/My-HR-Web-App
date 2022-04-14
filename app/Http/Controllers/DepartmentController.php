@@ -26,6 +26,9 @@ class DepartmentController extends Controller
     {
         $departments = Department::query();
         return DataTables::of($departments)
+            ->addColumn('plus-icon', function ($each) {
+                return null;
+            })
             ->addColumn('action', function ($each) {
                 $edit = "";
                 $detail = "";
@@ -112,6 +115,7 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
+        $department->name = $request->name;
         $department->head_department_id = $request->head_of_dep;
         $department->phone = $request->phone;
         $department->email = $request->email;

@@ -1,25 +1,45 @@
 @extends('layouts.app')
 
-@section('name')
+@section('title')
     Employee Lists
 @endsection
 
 @section('content')
     <div class="row">
-        <div class="col-12 mt-5">
+        <div class="my-4 d-flex align-items-baseline">
+            <div class="me-2">
+                <span class="fs-4">Employees</span>
+                <span class="fs-4 ms-1 text-muted">|</span>
+            </div>
+            <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+                <x-bread-crumb>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        All Employees
+                    </li>
+                </x-bread-crumb>
+            </nav>
+        </div>
+
+        <div class="mb-3">
+            <a href="{{ route('employee.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-circle-plus me-1"></i>
+                Add
+            </a>
+        </div>
+
+        <div class="col-12">
             <div class="card shadow-sm dt-card">
                 <div class="card-body">
                     <table class="table table-hover table-striped w-100" id="dataTable">
                         <thead>
                             <th class="no-sort"></th>
-                            <th class="text-center">Employee ID</th>
-                            <th class="text-center">Name</th>
-                            <th class="text-center">Phone</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Department</th>
-                            <th class="text-center">Role</th>
-                            <th class="text-center">Is Present</th>
-                            <th class="text-center no-sort">Action</th>
+                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Is Present</th>
+                            <th class="no-sort">Control</th>
                             <th class="text-center hidden no-sort">Updated_at</th>
                         </thead>
                     </table>
@@ -42,50 +62,38 @@
                     {
                         data: 'employee_id',
                         name: 'employee_id',
-                        class: 'text-center'
                     },
                     {
                         data: 'name',
                         name: 'name',
-                        class: 'text-center'
                     },
                     {
                         data: 'phone',
                         name: 'phone',
-                        class: 'text-center'
                     },
                     {
                         data: 'email',
                         name: 'email',
-                        class: 'text-center'
                     },
                     {
-                        data: 'department',
-                        name: 'department',
-                        class: 'text-center'
-                    },
-                    {
-                        data: 'role_name',
-                        name: 'role_name',
+                        data: 'dept',
+                        name: 'dept',
                     },
                     {
                         data: 'is_present',
                         name: 'is_present',
-                        class: 'text-center'
                     },
                     {
                         data: 'action',
                         name: 'action',
-                        class: 'text-center'
                     },
                     {
                         data: 'updated_at',
                         name: 'updated_at',
-                        class: 'text-center'
                     },
                 ],
                 order: [
-                    [9, "desc"]
+                    [4, "desc"]
                 ],
             });
 

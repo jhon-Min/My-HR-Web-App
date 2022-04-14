@@ -94,12 +94,13 @@ class HeadOfDepController extends Controller
      * @param  \App\Models\HeadOfDep  $headOfDep
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateHeadOfDepRequest $request, HeadOfDep $headOfDep)
+    public function update(UpdateHeadOfDepRequest $request, $id)
     {
-        $headOfDep->title = $request->title;
-        $headOfDep->save();
+        $hod = HeadOfDep::findOrFail($id);
+        $hod->title = $request->title;
+        $hod->update();
 
-        return redirect()->route('head-of-department.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $headOfDep->title . ' is successfully updated']);
+        return redirect()->route('head-of-department.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $hod->title . ' is successfully updated']);
 
     }
 

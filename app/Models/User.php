@@ -50,4 +50,9 @@ class User extends Authenticatable
 
         return asset('images/default-avatar.png');
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class, 'dep_id', 'id');
+    }
 }

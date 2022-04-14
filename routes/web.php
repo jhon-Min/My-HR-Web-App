@@ -5,7 +5,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HeadOfDepController;
 use App\Http\Controllers\HomeController;
-
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,4 +31,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/head-of-department', HeadOfDepController::class);
     Route::get('/head-of-department-table/ssd', [HeadOfDepController::class, 'ssd'])->name('head-dep.ssd');
+
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::post('/update-profile', [ProfileController::class, 'updateProfile'])->name('profile.update-profile');
 });

@@ -22,9 +22,9 @@ class UpdateHeadOfDepRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(Request $request)
+    public function rules()
     {
-        $id = $request->route('id');
+        // $id = $this->route('head-of-department')->id;
         return [
             "title" => "required|min:2"
         ];

@@ -12,7 +12,8 @@
         </a>
 
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item {{ request()->url() == route('profile.index') ? 'active' : '' }}"
+                    href="{{ route('profile.index') }}">Profile</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li>
                 <hr class="dropdown-divider">

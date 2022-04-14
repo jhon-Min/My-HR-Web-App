@@ -8,7 +8,7 @@ $semi-light: #f3f6f9;
 $dark: #353c48;
 $border-radius: 0px;
 
-// Bootstrap and Other
+// ==== Bootstrap & Other Libraries ====
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~flatpickr/dist/flatpickr.min.css';
@@ -17,14 +17,19 @@ $border-radius: 0px;
 @import './select2.css';
 @import './datatable-b5.css';
 
-// Custom Scss
+// ==== Custom Scss ====
 @import './sidebar';
 @import './emp';
-@import './table';
+@import './other-library';
 
 // ==== Global Css ====
 .btn-sm{
     font-size: 12px;
+}
+
+.py-8{
+    padding-top: 80px;
+    padding-bottom: 80px;
 }
 
 .mb-7{
@@ -39,77 +44,21 @@ $border-radius: 0px;
     padding-left: 0px;
 }
 
-.daterangepicker, .flatpickr-calendar{
-    margin-top: -55px !important;
-    z-index: 2000 !important;
+// Profile
+.profile-img{
+    width: 125px;
+    margin-top: -68px;
+}
+
+.profile-btn{
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 139px;
+    z-index: 1999;
 }
 
 
-.file-upload-icon{
-    font-size: 50px;
-}
 
-// ==== Select 2 ====
- .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice{
-     display: inline-block;
- }
-
- .select2-container--bootstrap-5.select2-container--open .select2-selection{
-     box-shadow: none;
- }
-
- .select2-container--bootstrap-5 .select2-selection{
-     border-radius: 0;
-     border: none ;
-     border-bottom: 1px solid $secondary !important;
- }
-
- // ==== Dropzone ====
-.dropzone{
-    border: 1px solid $light;
-    background: $light;
-}
-
-// ====== DataTable Css ======
-.dataTables_filter{
-    .form-control{
-        border: none;
-        border-bottom: 1px solid $light !important;
-        border-radius: 0px;
-        padding: 5px 1px;
-        transition: .3s;
-
-        &:focus{
-            box-shadow: none;
-            border-bottom-color: $primary !important;
-        }
-    }
-}
-
-mark {
-    background: orange;
-    color: black;
-}
-
-.table > tbody{
-    font-size: 15px;
-}
-
-@media screen and (max-width: 767px) {
-    div.dataTables_wrapper div.dataTables_length,
-    div.dataTables_wrapper div.dataTables_filter,
-    div.dataTables_wrapper div.dataTables_info,
-    div.dataTables_wrapper div.dataTables_paginate {
-        text-align: left;
-    }
-
-    div.dataTables_filter {
-        margin: 15px 0px;
-    }
-
-    div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-        justify-content: start !important;
-        margin-top: 25px;
-    }
-}
 

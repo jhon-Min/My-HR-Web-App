@@ -32,7 +32,7 @@
                         </button>
                     </div>
 
-                    <form action="{{ route('department.update', $department->id) }}" id="createForm" method="POST">
+                    <form action="{{ route('department.update', $department->id) }}" id="editForm" method="POST">
                         @csrf
                         @method('put')
                         <div class="row g-5">
@@ -93,7 +93,7 @@
 @endsection
 
 @section('scripts')
-    {!! JsValidator::formRequest('App\Http\Requests\StoreDepartmentRequest', '#createForm') !!}
+    {!! JsValidator::formRequest('App\Http\Requests\UpdateDepartmentRequest', '#editForm') !!}
     <script>
         $(".st-date").flatpickr({
             dateFormat: "d.m.Y",

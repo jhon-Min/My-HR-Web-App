@@ -26,10 +26,10 @@
                 <div class="card-body">
                     <div class="mb-4 d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold">Add Employee</h5>
-                        <button class="btn btn-outline-primary btn-sm">
+                        <a href="{{ route('employee.index') }}" class="btn btn-outline-primary btn-sm">
                             <i class="fa-solid fa-book me-1"></i>
                             <span>Lists</span>
-                        </button>
+                        </a>
                     </div>
 
                     <form action="{{ route('employee.store') }}" id="createForm" method="POST">
