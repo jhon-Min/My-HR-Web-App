@@ -6,6 +6,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HeadOfDepController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/update-profile', [ProfileController::class, 'updateProfile'])->name('profile.update-profile');
+
+    Route::resource('role', RoleController::class);
+    Route::get('/role/datatable/ssd', [RoleController::class, 'ssd'])->name('role.ssd');
 });

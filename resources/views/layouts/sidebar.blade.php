@@ -22,7 +22,7 @@
                     <span class="nav_name">Attendance</span>
                 </a>
 
-                <a href="#" class="nav_link">
+                <a href="{{ route('role.index') }}" class="nav_link">
                     <i class="fa-solid fa-users-gear"></i>
                     <span class="nav_name">Role</span>
                 </a>
