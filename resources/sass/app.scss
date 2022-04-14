@@ -8,21 +8,29 @@ $semi-light: #f3f6f9;
 $dark: #353c48;
 $border-radius: 0px;
 
-// Bootstrap
+// ==== Bootstrap & Other Libraries ====
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import '~flatpickr/dist/flatpickr.min.css';
 @import '~select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css';
 @import "~sweetalert2/src/sweetalert2.scss";
 @import './select2.css';
+@import './datatable-b5.css';
 
+// ==== Custom Scss ====
 @import './sidebar';
 @import './emp';
+@import './other-library';
 
 // ==== Global Css ====
-// .select2-container {
-//     border-bottom: 1px solid $secondary;
-// }
+.btn-sm{
+    font-size: 12px;
+}
+
+.py-8{
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
 
 .mb-7{
     margin-bottom: 70px;
@@ -36,33 +44,21 @@ $border-radius: 0px;
     padding-left: 0px;
 }
 
-.daterangepicker, .flatpickr-calendar{
-    margin-top: -55px !important;
-    z-index: 2000 !important;
+// Profile
+.profile-img{
+    width: 125px;
+    margin-top: -68px;
+}
+
+.profile-btn{
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 139px;
+    z-index: 1999;
 }
 
 
-.file-upload-icon{
-    font-size: 50px;
-}
 
-// ==== Select 2 ====
- .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice{
-     display: inline-block;
- }
 
- .select2-container--bootstrap-5.select2-container--open .select2-selection{
-     box-shadow: none;
- }
-
- .select2-container--bootstrap-5 .select2-selection{
-     border-radius: 0;
-     border: none ;
-     border-bottom: 1px solid $secondary !important;
- }
-
- // ==== Dropzone ====
-.dropzone{
-    border: 1px solid $light;
-    background: $light;
-}

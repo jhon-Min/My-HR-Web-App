@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateHeadOfDepRequest extends FormRequest
@@ -13,7 +14,7 @@ class UpdateHeadOfDepRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,9 @@ class UpdateHeadOfDepRequest extends FormRequest
      */
     public function rules()
     {
+        // $id = $this->route('head-of-department')->id;
         return [
-            //
+            "title" => "required|min:2"
         ];
     }
 }
