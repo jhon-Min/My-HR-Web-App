@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckInOutController;
 use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
@@ -22,6 +23,9 @@ use App\Http\Controllers\RoleController;
 */
 
 Auth::routes();
+
+Route::get('/check-in-out', [CheckInOutController::class, 'index'])->name('check.index');
+Route::post('check-process', [CheckInOutController::class, 'store'])->name('check.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
