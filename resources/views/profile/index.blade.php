@@ -106,6 +106,12 @@
                             <span class="me-1 text-secondary small">Gender :</span>
                             {{ $user->gender }}
                         </li>
+                        <li class="mt-4">
+                            <p class="small text-secondary mb-1">Your Roles</p>
+                            @foreach ($roles as $role)
+                                <span class="me-1 badge rounded-pill bg-dark">#{{ $role->name }}</span>
+                            @endforeach
+                        </li>
                     </ul>
                 </div>
             </div>

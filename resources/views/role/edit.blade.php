@@ -40,6 +40,24 @@
                                 placeholder="Role Name" required />
                         </div>
 
+                        <div class="col-12">
+                            <p class="mb-2 text-semi small font-weight-bolder">Permissions</p>
+                            <div class="row">
+                                @foreach ($permissions as $permission)
+                                    <div class="col-6 col-md-3 col-lg-2">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="permissions[]"
+                                                value="{{ $permission->id }}" id="defaultCheck{{ $permission->id }}"
+                                                @if (in_array($permission->id, $old_permissions)) checked @endif>
+                                            <label class="form-check-label" for="defaultCheck{{ $permission->id }}">
+                                                {{ $permission->name }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <div class="text-center mt-4 mb-3">
                             <a href="{{ route('role.index') }}" class="btn btn-danger ">Cancel</a>
                             <button class="btn btn-primary px-5 ms-2">Save</button>

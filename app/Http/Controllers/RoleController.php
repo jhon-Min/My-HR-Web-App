@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 
 class RoleController extends Controller
@@ -18,9 +19,13 @@ class RoleController extends Controller
             ->editColumn('updated_at', function ($each) {
                 return Carbon::parse($each->update_at)->format('Y-m-d H:i:s');
             })
-            // ->addColumn('plus-icon', function ($each) {
-            //     return null;
-            // })
+            ->addColumn('permissions', function ($each) {
+                $output = '';
+                foreach ($each->permissions as $permission) {
+                    $output .= "<span class='badge rounded-pill bg-dark m-1'>$permission->name</span>";
+                }
+                return $output;
+            })
             ->addColumn('action', function ($each) {
                 $edit = "";
                 $del = "";
@@ -31,7 +36,7 @@ class RoleController extends Controller
 
                 return '<div class="action-icon">' . $edit  . $del. '</div>';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'permissions'])
             ->make(true);
     }
 
@@ -42,7 +47,8 @@ class RoleController extends Controller
 
     public function create()
     {
-        return view('role.create');
+        $permissions = Permission::all();
+        return view('role.create', compact('permissions'));
     }
 
     public function Store(StoreRoleRequest $request)
@@ -51,21 +57,33 @@ class RoleController extends Controller
         $role->name = $request->name;
         $role->save();
 
+        // assign role permission to pivot table
+        $role->givePermissionTo($request->permissions);
+
         return redirect()->route('role.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Created', 'message' => $role->name . ' role is successfully created']);
     }
 
     public function edit(Role $role)
     {
-        return view('role.edit', compact('role'));
+        $old_permissions = $role->permissions->pluck('id')->toArray();
+        $permissions = Permission::all();
+        return view('role.edit', compact('role', 'old_permissions', 'permissions'));
     }
 
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        $beforeName = $role->name;
+        $old_permissions = $role->permissions->pluck('name')->toArray();
         $role->name = $request->name;
         $role->update();
 
-        return redirect()->route('role.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $beforeName . ' to ' . $role->name]);
+        // if($old_permissions){
+        //     $role->revokePermissionTo($old_permissions);
+        // }
+        // $role->givePermissionTo($request->permissions);
+
+        $role->syncPermissions($request->permissions); // revoke old data and give new data
+
+        return redirect()->route('role.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $role->name . 'is successfully Updated']);
     }
 
     public function destroy(Role $role)

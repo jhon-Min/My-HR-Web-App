@@ -82,6 +82,7 @@ class EmployeeController extends Controller
         $employee->address = $request->address;
         $employee->date_of_join = Carbon::createFromFormat('d.m.Y',$request->date_of_join)->format('Y-m-d');
         $employee->is_present = $request->is_present;
+        $employee->syncRoles($request->roles);
         $employee->save();
 
         return redirect()->route('employee.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Created', 'message' => 'Employee is successfully created']);
@@ -89,7 +90,9 @@ class EmployeeController extends Controller
 
     public function edit(User $employee)
     {
-        return view('employee.edit', compact('employee'));
+        $old_roles = $employee->roles ? $employee->roles->pluck('id')->toArray() : [];
+        $roles = Role::orderBy('id', 'DESC')->get();
+        return view('employee.edit', compact('employee','roles', 'old_roles'));
     }
 
     public function update(UpdateEmployeeRequest $request,User $employee)
@@ -107,6 +110,7 @@ class EmployeeController extends Controller
         $employee->address = $request->address;
         $employee->date_of_join = Carbon::createFromFormat('d.m.Y',$request->date_of_join)->format('Y-m-d');
         $employee->is_present = $request->is_present;
+        $employee->syncRoles($request->roles);
         $employee->update();
 
         return redirect()->route('employee.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => 'Employee is successfully updated']);
