@@ -21,10 +21,12 @@
         </div>
 
         <div class="mb-3">
-            <a href="{{ route('permission.create') }}" class="btn btn-primary">
-                <i class="fa-solid fa-circle-plus me-1"></i>
-                Add
-            </a>
+            @can('view_permission')
+                <a href="{{ route('permission.create') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-circle-plus me-1"></i>
+                    Add
+                </a>
+            @endcan
         </div>
 
         <div class="col-12">

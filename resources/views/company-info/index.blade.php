@@ -44,7 +44,7 @@
 
                         <div class="col-6 col-md-3 text-center">
                             <h1 class="mb-1 text-success  @if ($companyInfo->break_end_time) text-danger @endif"">{{ $companyInfo->break_end_time }}</h1>
-                                                <p class="     text-secondary">
+                                                        <p class="       text-secondary">
                                 <i class="fa-solid fa-circle-stop"></i>
                                 Break End Time
                                 </p>
@@ -99,9 +99,11 @@
                 </div>
             </div>
 
-            <div class="text-center mt-5">
-                <a href="{{ route('company-info.edit', $companyInfo->id) }}" class="btn btn-primary px-4">Change Info</a>
-            </div>
+            @can('edit_company')
+                <div class="text-center mt-5">
+                    <a href="{{ route('company-info.edit', $companyInfo->id) }}" class="btn btn-primary px-4">Change Info</a>
+                </div>
+            @endcan
         </div>
     </div>
 @endsection

@@ -21,10 +21,12 @@
         </div>
 
         <div class="mb-3">
-            <a href="{{ route('employee.create') }}" class="btn btn-primary">
-                <i class="fa-solid fa-circle-plus me-1"></i>
-                Add
-            </a>
+            @can('create_employee')
+                <a href="{{ route('employee.create') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-circle-plus me-1"></i>
+                    Add
+                </a>
+            @endcan
         </div>
 
         <div class="col-12">

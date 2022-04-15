@@ -13,6 +13,7 @@ class PermissionController extends Controller
 {
     public function ssd(Request $request)
     {
+        $this->checking('view_permission');
         $permission = Permission::query();
         return DataTables::of($permission)
             ->editColumn('updated_at', function ($each) {
@@ -22,9 +23,12 @@ class PermissionController extends Controller
                 $edit = "";
                 $del = "";
 
-                $edit = '<a href="'.route('permission.edit', $each->id).'" class="btn btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
-
-                $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn ms-2" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                if (auth()->user()->can('edit_permission')) {
+                    $edit = '<a href="'.route('permission.edit', $each->id).'" class="btn btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                }
+                if (auth()->user()->can('edit_permission')) {
+                    $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn ms-2" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                }
 
                 return '<div class="action-icon">' . $edit  . $del. '</div>';
             })
@@ -34,16 +38,19 @@ class PermissionController extends Controller
 
     public function index()
     {
+        $this->checking('view_permission');
         return view('permission.index');
     }
 
     public function create()
     {
+        $this->checking('create_permission');
         return view('permission.create');
     }
 
     public function store(StorePermissionRequest $request)
     {
+        $this->checking('create_permission');
         $permission = new Permission();
         $permission->name = $request->name;
         $permission->save();
@@ -53,11 +60,13 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
+        $this->checking('edit_permission');
         return view('permission.edit', compact('permission'));
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
+        $this->checking('edit_permission');
         $permission->name = $request->name;
         $permission->update();
 
@@ -66,6 +75,7 @@ class PermissionController extends Controller
 
     public function destroy(Permission $permission)
     {
+        $this->checking('delete_permission');
         return $permission->delete();
     }
 }
