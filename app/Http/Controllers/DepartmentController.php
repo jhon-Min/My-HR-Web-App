@@ -19,11 +19,13 @@ class DepartmentController extends Controller
      */
     public function index()
     {
+        $this->checking('view_department');
         return view('department.index');
     }
 
     public function ssd(Request $request)
     {
+        $this->checking('view_department');
         $departments = Department::query();
         return DataTables::of($departments)
             ->addColumn('plus-icon', function ($each) {
@@ -37,9 +39,13 @@ class DepartmentController extends Controller
                 $detail = "";
                 $del = "";
 
-                $edit = '<a href="'.route('department.edit', $each->id).'" class="btn me-1 btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                if (auth()->user()->can('edit_department')) {
+                    $edit = '<a href="'.route('department.edit', $each->id).'" class="btn me-1 btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                }
 
-                $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                if (auth()->user()->can('edit_department')) {
+                    $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                }
 
                 return '<div class="action-icon">' . $edit  . $del. '</div>';
             })
@@ -62,6 +68,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
+        $this->checking('create_department');
         $hods = HeadOfDep::orderBy('title')->get();
         return view('department.create', compact('hods'));
     }
@@ -74,16 +81,17 @@ class DepartmentController extends Controller
      */
     public function store(StoreDepartmentRequest $request)
     {
-       $department = new Department();
-       $department->name = $request->name;
-       $department->head_department_id = $request->head_of_dep;
-       $department->phone = $request->phone;
-       $department->email = $request->email;
-       $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');;
-       $department->total_employees = $request->total;
-       $department->save();
+        $this->checking('create_department');
+        $department = new Department();
+        $department->name = $request->name;
+        $department->head_department_id = $request->head_of_dep;
+        $department->phone = $request->phone;
+        $department->email = $request->email;
+        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');;
+        $department->total_employees = $request->total;
+        $department->save();
 
-       return redirect()->route('department.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Created', 'message' => $department->name . ' is successfully created']);
+        return redirect()->route('department.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Created', 'message' => $department->name . ' is successfully created']);
     }
 
     /**
@@ -105,6 +113,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
+        $this->checking('edit_department');
         $hods = HeadOfDep::orderBy('title')->get();
         return view('department.edit', compact('department', 'hods'));
     }
@@ -118,6 +127,7 @@ class DepartmentController extends Controller
      */
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
+        $this->checking('edit_department');
         $department->name = $request->name;
         $department->head_department_id = $request->head_of_dep;
         $department->phone = $request->phone;
@@ -137,6 +147,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        $this->checking('delete_department');
         return $department->delete();
     }
 }

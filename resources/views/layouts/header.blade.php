@@ -14,7 +14,8 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <li><a class="dropdown-item {{ request()->url() == route('profile.index') ? 'active' : '' }}"
                     href="{{ route('profile.index') }}">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item {{ request()->url() == route('company-info.show', 1) ? 'active' : '' }}"
+                    href="{{ route('company-info.show', 1) }}">Company Information</a></li>
             <li>
                 <hr class="dropdown-divider">
             </li>

@@ -15,11 +15,13 @@ class EmployeeController extends Controller
 {
     public function index()
     {
+        $this->checking('view_employee');
         return view('employee.index');
     }
 
     public function ssd(Request $request)
     {
+        $this->checking('view_employee');
         $employees = User::query();
         return DataTables::of($employees)
             ->editColumn('updated_at', function ($each) {
@@ -43,11 +45,15 @@ class EmployeeController extends Controller
                 $detail = "";
                 $del = "";
 
-                $edit = '<a href="'.route('employee.edit', $each->id).'" class="btn me-1 btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                if (auth()->user()->can('edit_employee')) {
+                    $edit = '<a href="'.route('employee.edit', $each->id).'" class="btn me-1 btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                }
+
+                if (auth()->user()->can('edit_employee')) {
+                    $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                }
 
                 $detail = '<a href="' . route('employee.show', $each->id) . '" class="btn btn-secondary btn-sm rounded-circle me-1"><i class="fa-solid fa-circle-info"></i></a>';
-
-                $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
 
                 return '<div class="action-icon">' . $edit . $detail . $del . '</div>';
             })
@@ -62,12 +68,15 @@ class EmployeeController extends Controller
 
     public function create()
     {
+        $this->checking('create_employee');
         $roles = Role::orderBy('id', 'DESC')->get();
         return view('employee.create', compact('roles'));
     }
 
     public function store(StoreEmployee $request)
     {
+        $this->checking('create_employee');
+
         $employee = new User();
         $employee->employee_id = $request->employee_id;
         $employee->email = $request->email;
@@ -82,6 +91,7 @@ class EmployeeController extends Controller
         $employee->address = $request->address;
         $employee->date_of_join = Carbon::createFromFormat('d.m.Y',$request->date_of_join)->format('Y-m-d');
         $employee->is_present = $request->is_present;
+        $employee->syncRoles($request->roles);
         $employee->save();
 
         return redirect()->route('employee.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Created', 'message' => 'Employee is successfully created']);
@@ -89,11 +99,17 @@ class EmployeeController extends Controller
 
     public function edit(User $employee)
     {
-        return view('employee.edit', compact('employee'));
+        $this->checking('edit_employee');
+
+        $old_roles = $employee->roles ? $employee->roles->pluck('id')->toArray() : [];
+        $roles = Role::orderBy('id', 'DESC')->get();
+        return view('employee.edit', compact('employee','roles', 'old_roles'));
     }
 
     public function update(UpdateEmployeeRequest $request,User $employee)
     {
+        $this->checking('edit_employee');
+
         $employee->employee_id = $request->employee_id;
         $employee->email = $request->email;
         $employee->password =  $request->password ? Hash::make($request->password) : $employee->password;
@@ -107,6 +123,7 @@ class EmployeeController extends Controller
         $employee->address = $request->address;
         $employee->date_of_join = Carbon::createFromFormat('d.m.Y',$request->date_of_join)->format('Y-m-d');
         $employee->is_present = $request->is_present;
+        $employee->syncRoles($request->roles);
         $employee->update();
 
         return redirect()->route('employee.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => 'Employee is successfully updated']);
@@ -114,6 +131,8 @@ class EmployeeController extends Controller
 
     public function destroy(User $employee)
     {
+        $this->checking('delete_employee');
+
         return $employee->delete();
     }
 }

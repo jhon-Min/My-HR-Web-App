@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
@@ -42,4 +43,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('permission', PermissionController::class);
     Route::get('/permission/datatable/ssd', [PermissionController::class, 'ssd'])->name('permission.ssd');
+
+    Route::resource('company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
 });

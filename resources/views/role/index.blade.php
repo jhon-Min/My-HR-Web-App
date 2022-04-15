@@ -21,10 +21,12 @@
         </div>
 
         <div class="mb-3">
-            <a href="{{ route('role.create') }}" class="btn btn-primary">
-                <i class="fa-solid fa-circle-plus me-1"></i>
-                Add
-            </a>
+            @can('view_role')
+                <a href="{{ route('role.create') }}" class="btn btn-primary">
+                    <i class="fa-solid fa-circle-plus me-1"></i>
+                    Add
+                </a>
+            @endcan
         </div>
 
         <div class="col-12">
@@ -33,6 +35,7 @@
                     <table class="table table-hover table-striped w-100 py-3" id="dataTable">
                         <thead>
                             <th class="">Role Name</th>
+                            <th class="w-50 ">Access Permissions</th>
                             <th class="no-sort">Control</th>
                             <th class="text-center hidden">Updated_at</th>
                         </thead>
@@ -53,6 +56,10 @@
                         name: 'name'
                     },
                     {
+                        data: 'permissions',
+                        name: 'permissions',
+                    },
+                    {
                         data: 'action',
                         name: 'action',
                     },
@@ -61,9 +68,9 @@
                         name: 'updated_at',
                     },
                 ],
-                order: [
-                    [0, "desc"]
-                ],
+                // order: [
+                //     [2, "desc"]
+                // ],
             });
 
             $(document).on('click', '.del-btn', function(e, id) {

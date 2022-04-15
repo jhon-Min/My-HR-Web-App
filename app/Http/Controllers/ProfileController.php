@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +14,8 @@ class ProfileController extends Controller
     {
         $id = Auth::user()->id;
         $user = User::findOrFail($id);
-        return view('profile.index', compact('user'));
+        $roles = Role::all();
+        return view('profile.index', compact('user', 'roles'));
     }
 
     public function updateProfile(Request $request)

@@ -14098,6 +14098,11 @@ div.dataTables_wrapper div.dataTables_paginate {
   z-index: 2000 !important;
 }
 
+.card {
+  border-radius: 10px;
+  border: none;
+}
+
 .btn-sm, .btn-group-sm > .btn {
   font-size: 12px;
 }

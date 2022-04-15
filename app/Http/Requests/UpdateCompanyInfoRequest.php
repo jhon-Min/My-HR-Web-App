@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateDepartmentRequest extends FormRequest
+class UpdateCompanyInfoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,15 @@ class UpdateDepartmentRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route('department')->id;
-
         return [
-            "name" => "required|unique:departments,name," .$id,
+            "name" => "required|min:2|max:255",
+            "email" => "required|email",
             "phone" => "required",
-            "email" => "required",
-            "head_of_dep" => "required",
-            "start_date" => "required",
-            "total" => "required",
+            "address" => "required",
+            "office_start_time" => "required",
+            "office_end_time" => "required",
+            "break_start_time" => "required",
+            "break_end_time" => "required",
         ];
     }
 }

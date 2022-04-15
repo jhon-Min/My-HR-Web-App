@@ -23,6 +23,11 @@ $border-radius: 0px;
 @import './other-library';
 
 // ==== Global Css ====
+.card{
+    border-radius: 10px;
+    border: none;
+}
+
 .btn-sm{
     font-size: 12px;
 }

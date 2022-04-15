@@ -29,9 +29,13 @@ class HeadOfDepController extends Controller
                 $detail = "";
                 $del = "";
 
-                $edit = '<a href="'.route('head-of-department.edit', $each->id).'" class="btn btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                if (auth()->user()->can('edit_head-dept')) {
+                    $edit = '<a href="'.route('head-of-department.edit', $each->id).'" class="btn btn-success btn-sm rounded-circle"><i class="fa-solid fa-pen-to-square fw-light"></i></a>';
+                }
 
-                $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn ms-2" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                if (auth()->user()->can('delete_head-dept')) {
+                    $del = '<a href="#" class="btn btn-danger btn-sm rounded-circle del-btn ms-2" data-id="' . $each->id . '"><i class="fa-solid fa-trash-alt fw-light"></i></a>';
+                }
 
                 return '<div class="action-icon">' . $edit  . $del. '</div>';
             })
@@ -46,6 +50,7 @@ class HeadOfDepController extends Controller
      */
     public function create()
     {
+        $this->checking('create_head-dept');
         return view('head-department.create');
     }
 
@@ -57,6 +62,7 @@ class HeadOfDepController extends Controller
      */
     public function store(StoreHeadOfDepRequest $request)
     {
+        $this->checking('create_head-dept');
         $head_dep = new HeadOfDep();
         $head_dep->title = $request->title;
         $head_dep->save();
@@ -83,6 +89,7 @@ class HeadOfDepController extends Controller
      */
     public function edit($id)
     {
+        $this->checking('edit_head-dept');
         $hod = HeadOfDep::findOrFail($id);
         return view('head-department.edit', compact('hod'));
     }
@@ -96,6 +103,7 @@ class HeadOfDepController extends Controller
      */
     public function update(UpdateHeadOfDepRequest $request, $id)
     {
+        $this->checking('edit_head-dept');
         $hod = HeadOfDep::findOrFail($id);
         $hod->title = $request->title;
         $hod->update();
@@ -112,6 +120,7 @@ class HeadOfDepController extends Controller
      */
     public function destroy($id)
     {
+        $this->checking('delete_head-dept');
         $hod = HeadOfDep::findOrFail($id);
         $hod->delete();
     }

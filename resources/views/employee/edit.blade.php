@@ -122,11 +122,10 @@
                                 <select class="form-select select-custom-multiple" name="roles[]"
                                     data-placeholder="Choose Role" multiple>
                                     <option></option>
-                                    <option>Reactive</option>
-                                    <option>Solution</option>
-                                    <option>Conglomeration</option>
-                                    <option>Algoritm</option>
-                                    <option>Holistic</option>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->id }}"
+                                            @if (in_array($role->id, $old_roles)) selected @endif>{{ $role->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
 

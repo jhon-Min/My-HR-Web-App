@@ -10,4 +10,12 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+     // Check Permission
+     public function checking($data)
+     {
+        if (!auth()->user()->can($data)) {
+            return abort(403, 'Unauthorized action');
+        }
+     }
 }
