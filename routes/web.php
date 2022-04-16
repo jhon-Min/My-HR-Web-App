@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CheckInOutController;
 use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmployeeController;
@@ -23,6 +25,9 @@ use App\Http\Controllers\RoleController;
 
 Auth::routes();
 
+Route::get('/check-in-out', [CheckInOutController::class, 'index'])->name('check.index');
+Route::post('check-process', [CheckInOutController::class, 'store'])->name('check.store');
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -44,5 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('permission', PermissionController::class);
     Route::get('/permission/datatable/ssd', [PermissionController::class, 'ssd'])->name('permission.ssd');
 
-    Route::resource('company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
+    Route::resource('/company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
+
+    // Attendance and Payroll
+    Route::resource('/attendance', AttendanceController::class);
+    Route::get('/attendance/datatable/ssd', [AttendanceController::class, 'ssd'])->name('attendance.ssd');
 });

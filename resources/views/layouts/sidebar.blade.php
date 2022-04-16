@@ -23,10 +23,11 @@
                     </x-menu-item>
                 @endcan
 
-                <a href="#" class="nav_link">
-                    <i class="fa-solid fa-book-open"></i>
-                    <span class="nav_name">Attendance</span>
-                </a>
+                @can('view_attendance')
+                    <x-menu-item link="{{ route('attendance.index') }}" icon="fa-solid fa-book-open">
+                        Attendance
+                    </x-menu-item>
+                @endcan
 
                 @can('view_role')
                     <x-menu-item link="{{ route('role.index') }}" icon="fa-solid fa-users-gear">

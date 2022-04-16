@@ -22,10 +22,7 @@
 
         <div class="mb-3">
             @can('create_department')
-                <a href="{{ route('department.create') }}" class="btn btn-primary">
-                    <i class="fa-solid fa-circle-plus me-1"></i>
-                    Add
-                </a>
+                <x-create-item link="{{ route('department.create') }}">Add</x-create-item>
             @endcan
         </div>
 
