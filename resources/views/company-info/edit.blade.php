@@ -91,7 +91,8 @@
                             </div>
 
                             <div class="text-center mt-4 mb-3">
-                                <a href="{{ route('department.index') }}" class="btn btn-danger ">Cancel</a>
+                                <a href="{{ route('company-info.show', $companyInfo->id) }}"
+                                    class="btn btn-danger ">Cancel</a>
                                 <button class="btn btn-primary px-5 ms-2">Save</button>
                             </div>
                         </div>

@@ -87,7 +87,7 @@ class DepartmentController extends Controller
         $department->head_department_id = $request->head_of_dep;
         $department->phone = $request->phone;
         $department->email = $request->email;
-        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');;
+        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');
         $department->total_employees = $request->total;
         $department->save();
 
@@ -132,7 +132,7 @@ class DepartmentController extends Controller
         $department->head_department_id = $request->head_of_dep;
         $department->phone = $request->phone;
         $department->email = $request->email;
-        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');;
+        $department->start_date = Carbon::createFromFormat('d.m.Y', $request->start_date)->format('Y-m-d');
         $department->total_employees = $request->total;
         $department->save();
 

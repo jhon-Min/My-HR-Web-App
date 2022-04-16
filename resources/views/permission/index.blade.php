@@ -22,10 +22,7 @@
 
         <div class="mb-3">
             @can('view_permission')
-                <a href="{{ route('permission.create') }}" class="btn btn-primary">
-                    <i class="fa-solid fa-circle-plus me-1"></i>
-                    Add
-                </a>
+                <x-create-item link="{{ route('permission.create') }}">Add</x-create-item>
             @endcan
         </div>
 

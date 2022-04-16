@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\CheckInOutController;
 use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
@@ -48,5 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('permission', PermissionController::class);
     Route::get('/permission/datatable/ssd', [PermissionController::class, 'ssd'])->name('permission.ssd');
 
-    Route::resource('company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
+    Route::resource('/company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
+
+    // Attendance and Payroll
+    Route::resource('/attendance', AttendanceController::class);
+    Route::get('/attendance/datatable/ssd', [AttendanceController::class, 'ssd'])->name('attendance.ssd');
 });

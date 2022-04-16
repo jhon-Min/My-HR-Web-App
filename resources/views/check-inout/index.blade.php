@@ -96,5 +96,7 @@
                 $('.pincode-input-text').first().select().focus();
             }
         });
+
+        $('.pincode-input-text').first().select().focus();
     </script>
 @endsection
