@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\HeadOfDepController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MyAttendanceController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -54,4 +55,8 @@ Route::middleware('auth')->group(function () {
     // Attendance and Payroll
     Route::resource('/attendance', AttendanceController::class);
     Route::get('/attendance/datatable/ssd', [AttendanceController::class, 'ssd'])->name('attendance.ssd');
+
+    // My Attendance and Payroll
+    Route::get('/my-attendance/scan', [MyAttendanceController::class, 'scanQr'])->name('my-attendance.scanQr');
+    Route::post('/my-attendance/store-qr', [MyAttendanceController::class, 'storeQr'])->name('my-attendance.storeQr');
 });

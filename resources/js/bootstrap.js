@@ -1,9 +1,11 @@
 window._ = require("lodash");
+import QrScanner from "qr-scanner";
 import Swal from "sweetalert2/dist/sweetalert2";
 
 try {
     window.$ = window.jQuery = require("jquery");
     window.Swal = Swal;
+    window.QrScanner = QrScanner;
     require("bootstrap");
 } catch (e) {}
 
