@@ -4,6 +4,7 @@
     Attendances
 @endsection
 
+
 @section('content')
     <div class="row">
         <div class="my-4 d-flex align-items-baseline">
@@ -27,12 +28,15 @@
         </div>
 
         <div class="col-12">
-            <div class="card shadow-sm dt-card">
+            <div class="card shadow-sm dt-card mb-3">
                 <div class="card-body">
-                    <table class="table table-hover table-striped w-100 py-3 " id="dataTable">
+                    <h5 class="mb-3 fw-bold">All Attendances</h5>
+                    <table class="table table-hover table-striped w-100 py-3 att-table" id="dataTable">
                         <thead>
                             <th class="no-sort"></th>
-                            <th class="">Employees</th>
+                            <th class="">#</th>
+                            <th class="">Name</th>
+                            <th class="">Employee ID</th>
                             <th class="">Date</th>
                             <th class="">Check-in time</th>
                             <th class="">Check-out time</th>
@@ -57,8 +61,16 @@
                         class: 'text-center'
                     },
                     {
+                        data: 'profile',
+                        name: 'profile'
+                    },
+                    {
                         data: 'employee',
                         name: 'employee'
+                    },
+                    {
+                        data: 'employee_id',
+                        name: 'employee_id'
                     },
                     {
                         data: 'date',
@@ -82,7 +94,7 @@
                     },
                 ],
                 order: [
-                    [3, "desc"]
+                    [4, "desc"]
                 ],
             });
 

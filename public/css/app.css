@@ -14014,6 +14014,7 @@ a {
   transition: 0.5s;
   color: #353c48;
   font-size: 17px;
+  margin-right: -7px;
 }
 .nav_link span {
   color: #353c48;
@@ -14223,6 +14224,10 @@ div.dataTables_wrapper div.dataTables_paginate {
   padding-left: 0px;
 }
 
+.att-table tbody tr {
+  line-height: 3;
+}
+
 .profile-img {
   width: 125px;
   margin-top: -68px;
@@ -14235,4 +14240,8 @@ div.dataTables_wrapper div.dataTables_paginate {
   right: 0;
   top: 139px;
   z-index: 1999;
+}
+
+.profile-thumbnail {
+  width: 40px;
 }

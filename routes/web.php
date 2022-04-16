@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function () {
     // Attendance and Payroll
     Route::resource('/attendance', AttendanceController::class);
     Route::get('/attendance/datatable/ssd', [AttendanceController::class, 'ssd'])->name('attendance.ssd');
+    Route::get('/attendance-report', [AttendanceController::class, 'report'])->name('attendance.report');
+    Route::get('/attendance-report-table', [AttendanceController::class, 'reportTable'])->name('attendance.report-table');
 
     // My Attendance and Payroll
     Route::get('/my-attendance/scan', [MyAttendanceController::class, 'scanQr'])->name('my-attendance.scanQr');

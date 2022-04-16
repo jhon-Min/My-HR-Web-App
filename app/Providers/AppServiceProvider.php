@@ -32,9 +32,6 @@ class AppServiceProvider extends ServiceProvider
             View::share('departments', Department::orderBy('name')->get());
         }
 
-        if(Schema::hasTable('users')){
-            View::share('employees', User::orderBy('name')->get());
-        }
 
     }
 }

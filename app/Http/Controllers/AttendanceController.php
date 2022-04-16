@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use Carbon\CarbonPeriod;
 use App\Models\CheckInOut;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\StoreAttendanceRequest;
 use App\Http\Requests\UpdateAttendanceRequest;
+use App\Models\CompanyInfo;
 
 class AttendanceController extends Controller
 {
@@ -29,13 +31,19 @@ class AttendanceController extends Controller
                 return Carbon::parse($each->date)->format('d.m.Y');
             })
             ->editColumn('check_in', function ($each) {
-                return Carbon::parse($each->check_in)->format('H:i:s a');
+                return Carbon::parse($each->check_in)->format('h:i:s a');
             })
             ->editColumn('check_out', function ($each) {
-                return Carbon::parse($each->check_out)->format('H:i:s a');
+                return Carbon::parse($each->check_out)->format('h:i:s a');
+            })
+            ->addColumn('profile', function ($each) {
+                return '<img src="' . $each->employee->profile_img_path() . '" alt="" class="profile-thumbnail border border-1 border-white shadow-sm rounded-circle" />';
             })
             ->addColumn('employee', function ($each) {
                 return $each->employee ? $each->employee->name : '-';
+            })
+            ->addColumn('employee_id', function ($each) {
+                return $each->employee ? $each->employee->employee_id : '-';
             })
             ->addColumn('plus-icon', function ($each) {
                 return null;
@@ -54,7 +62,7 @@ class AttendanceController extends Controller
 
                 return '<div class="action-icon">' . $edit . $del . '</div>';
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action', 'profile'])
             ->make(true);
     }
 
@@ -67,7 +75,8 @@ class AttendanceController extends Controller
     public function create()
     {
         $this->checking('create_attendance');
-        return view('attendance.create');
+        $employees = User::orderBy('name')->get();
+        return view('attendance.create', compact('employees'));
     }
 
     public function store(StoreAttendanceRequest $request)
@@ -91,11 +100,13 @@ class AttendanceController extends Controller
     public function edit(CheckInOut $attendance)
     {
         $this->checking('edit_attendance');
-        return view('attendance.edit', compact('attendance'));
+        $employees = User::orderBy('name')->get();
+        return view('attendance.edit', compact('attendance', 'employees'));
     }
 
     public function update(UpdateAttendanceRequest $request, CheckInOut $attendance)
     {
+        $this->checking('edit_attendance');
         $currentDate = Carbon::createFromFormat('d.m.Y', $request->date)->format('Y-m-d');
         $attendance->user_id = $request->user_id;
         $attendance->date = $currentDate;
@@ -110,5 +121,28 @@ class AttendanceController extends Controller
     {
         $this->checking('delete_attendance');
         return $attendance->delete();
+    }
+
+    public function report(Request $request)
+    {
+        return view('attendance.report');
+    }
+
+    public function reportTable(Request $request)
+    {
+        if (!auth()->user()->can('view_attendance')) {
+            abort(403, 'Unauthorized action');
+        }
+
+        $month = $request->month;
+        $year = $request->year;
+        $start = $year . '-' . $month . '-01';
+        $end = Carbon::parse($start)->endOfMonth()->format('Y-m-d');
+
+        $periods = new CarbonPeriod($start, $end);
+        $employees = User::orderBy('employee_id')->where('employee_id', 'like', '%' . $request->employee_name . '%')->get();
+        $company = CompanyInfo::findOrFail(1);
+        $attendances = CheckInOut::whereMonth('date', $month)->whereYear('date', $year)->get();
+        return view('components.report-table', compact('periods', 'employees', 'company', 'attendances'));
     }
 }

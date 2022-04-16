@@ -34,6 +34,9 @@ class EmployeeController extends Controller
                     return ' <span class="badge rounded-pill bg-danger">No</span>';
                 }
             })
+            ->editColumn('profile_img', function ($each) {
+                return '<img src="' . $each->profile_img_path() . '" alt="" class="profile-thumbnail border border-1 border-white shadow-sm rounded-circle" />';
+            })
             ->addColumn('dept', function($each){
                 return $each->department ? $each->department->name : '-';
             })
@@ -62,7 +65,7 @@ class EmployeeController extends Controller
                     $q->where('name', 'like', "%$keyword%");
                 });
             })
-            ->rawColumns(['action', 'is_present'])
+            ->rawColumns(['action', 'is_present', 'profile_img'])
             ->make(true);
     }
 
@@ -95,6 +98,11 @@ class EmployeeController extends Controller
         $employee->save();
 
         return redirect()->route('employee.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Created', 'message' => 'Employee is successfully created']);
+    }
+
+    public function show(User $employee)
+    {
+        return $employee;
     }
 
     public function edit(User $employee)

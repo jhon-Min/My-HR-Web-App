@@ -25,7 +25,13 @@
 
                 @can('view_attendance')
                     <x-menu-item link="{{ route('attendance.index') }}" icon="fa-solid fa-book-open">
-                        Attendance
+                        Attendances
+                    </x-menu-item>
+                @endcan
+
+                @can('view_attendance')
+                    <x-menu-item link="{{ route('attendance.report') }}" icon="fa-solid fa-chalkboard-user">
+                        Attendance Report
                     </x-menu-item>
                 @endcan
 
