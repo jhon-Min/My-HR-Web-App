@@ -17,6 +17,7 @@ class AttendanceController extends Controller
     public function ssd(Request $request)
     {
         $this->checking('view_attendance');
+        $company = CompanyInfo::findOrFail(1);
         $attendances = CheckInOut::with('employee');
         return DataTables::of($attendances)
             ->filterColumn('employee', function ($query, $keyword) {
@@ -31,7 +32,11 @@ class AttendanceController extends Controller
                 return Carbon::parse($each->date)->format('d.m.Y');
             })
             ->editColumn('check_in', function ($each) {
-                return Carbon::parse($each->check_in)->format('h:i:s a');
+               if( Carbon::parse($each->check_in)->format('H:i:s') <= '09:00:00'){
+                 return '<span class="text-success">'.Carbon::parse($each->check_in)->format('h:i:s a').'<span>';
+               }else{
+                 return '<span class="text-danger">'.Carbon::parse($each->check_in)->format('h:i:s a').'<span>';
+               }
             })
             ->editColumn('check_out', function ($each) {
                 return Carbon::parse($each->check_out)->format('h:i:s a');
@@ -62,7 +67,7 @@ class AttendanceController extends Controller
 
                 return '<div class="action-icon">' . $edit . $del . '</div>';
             })
-            ->rawColumns(['action', 'profile'])
+            ->rawColumns(['action', 'profile', 'check_in'])
             ->make(true);
     }
 
@@ -140,7 +145,7 @@ class AttendanceController extends Controller
         $end = Carbon::parse($start)->endOfMonth()->format('Y-m-d');
 
         $periods = new CarbonPeriod($start, $end);
-        $employees = User::orderBy('employee_id')->where('employee_id', 'like', '%' . $request->employee_name . '%')->get();
+        $employees = User::orderBy('employee_id')->where('name', 'like', '%' . $request->employee_name . '%')->get();
         $company = CompanyInfo::findOrFail(1);
         $attendances = CheckInOut::whereMonth('date', $month)->whereYear('date', $year)->get();
         return view('components.report-table', compact('periods', 'employees', 'company', 'attendances'));

@@ -61,4 +61,6 @@ Route::middleware('auth')->group(function () {
     // My Attendance and Payroll
     Route::get('/my-attendance/scan', [MyAttendanceController::class, 'scanQr'])->name('my-attendance.scanQr');
     Route::post('/my-attendance/store-qr', [MyAttendanceController::class, 'storeQr'])->name('my-attendance.storeQr');
+    Route::get('/my-attendance/datatable/ssd', [MyAttendanceController::class, 'ssd'])->name('my-attendance.ssd');
+
 });

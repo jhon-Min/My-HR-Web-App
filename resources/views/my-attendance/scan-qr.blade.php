@@ -20,7 +20,7 @@
             </nav>
         </div>
 
-        <div class="col-12 col-md-7">
+        <div class="col-12 col-md-7 mb-5">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
                     <h5 class="fw-bold text-start">Attendance Scan</h5>
@@ -58,6 +58,26 @@
             </div>
         </div>
 
+        <div class="col-12">
+            <div class="card shadow-sm dt-card mb-3">
+                <div class="card-body">
+                    <h5 class="mb-3 fw-bold">{{ $user->name }}'s Attendances</h5>
+                    <table class="table table-hover table-striped w-100 py-3 att-table" id="dataTable">
+                        <thead>
+                            <th class="no-sort"></th>
+                            <th class="">#</th>
+                            <th class="">Name</th>
+                            <th class="">Employee ID</th>
+                            <th class="">Date</th>
+                            <th class="">Check-in</th>
+                            <th class="">Check-out</th>
+                            <th class="text-center hidden">Updated_at</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 @endsection
 
@@ -65,7 +85,7 @@
     <script>
         $(document).ready(function() {
 
-            // QR Scanner
+            // ======== QR Scanner =========
             var videoElem = document.getElementById('vd');
             var videoElem = document.getElementById('vd');
             const qrScanner = new QrScanner(videoElem, function(result) {
@@ -121,7 +141,47 @@
                 qrScanner.stop();
             })
 
-
+            // ======== Data Table From My Attendance Controller =========
+            var table = $('#dataTable').DataTable({
+                ajax: '{{ route('my-attendance.ssd') }}',
+                columns: [{
+                        data: 'plus-icon',
+                        name: 'plus-icon',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'profile',
+                        name: 'profile'
+                    },
+                    {
+                        data: 'employee',
+                        name: 'employee'
+                    },
+                    {
+                        data: 'employee_id',
+                        name: 'employee_id'
+                    },
+                    {
+                        data: 'date',
+                        name: 'date',
+                    },
+                    {
+                        data: 'check_in',
+                        name: 'check_in',
+                    },
+                    {
+                        data: 'check_out',
+                        name: 'check_out',
+                    },
+                    {
+                        data: 'updated_at',
+                        name: 'updated_at',
+                    },
+                ],
+                order: [
+                    [4, "desc"]
+                ],
+            });
         })
     </script>
 @endsection
