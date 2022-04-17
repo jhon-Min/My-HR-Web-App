@@ -26,7 +26,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-6 col-md-3 mb-3 mb-md-0 text-center">
-                            <h1 class="mb-1 text-success">{{ $companyInfo->office_start_time }}</h1>
+                            <h1 class="mb-1 text-success">
+                                {{ Carbon\Carbon::parse($companyInfo->office_start_time)->format('h:i A') }}</h1>
                             <p class="text-secondary">
                                 <i class="fa-solid fa-clock"></i>
                                 Office Start
@@ -35,7 +36,7 @@
 
                         <div class="col-6 col-md-3 mb-3 mb-md-0 text-center">
                             <h1 class="mb-1 text-success @if ($companyInfo->break_start_time) text-danger @endif">
-                                {{ $companyInfo->break_start_time }}</h1>
+                                {{ Carbon\Carbon::parse($companyInfo->break_start_time)->format('h:i A') }}</h1>
                             <p class="text-secondary">
                                 <i class="fa-solid fa-circle-stop"></i>
                                 Break Start Time
@@ -43,15 +44,17 @@
                         </div>
 
                         <div class="col-6 col-md-3 text-center">
-                            <h1 class="mb-1 text-success  @if ($companyInfo->break_end_time) text-danger @endif"">{{ $companyInfo->break_end_time }}</h1>
-                                                        <p class="       text-secondary">
+                            <h1 class="mb-1 text-success  @if ($companyInfo->break_end_time) text-danger @endif"">{{ Carbon\Carbon::parse($companyInfo->break_end_time)->format('h:i A') }}</h1>
+                                                                                    <p class="
+                                             text-secondary">
                                 <i class="fa-solid fa-circle-stop"></i>
                                 Break End Time
                                 </p>
                         </div>
 
                         <div class="col-6 col-md-3 text-center">
-                            <h1 class="mb-1 text-success">{{ $companyInfo->office_end_time }}</h1>
+                            <h1 class="mb-1 text-success">
+                                {{ Carbon\Carbon::parse($companyInfo->office_end_time)->format('h:i A') }}</h1>
                             <p class="text-secondary">
                                 <i class="fa-solid fa-clock"></i>
                                 Office End

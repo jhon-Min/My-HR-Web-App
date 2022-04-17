@@ -1,46 +1,42 @@
 @extends('layouts.app')
 
-@section('name')
-    Attendances
+@section('title')
+    Salary Lists
 @endsection
-
 
 @section('content')
     <div class="row">
         <div class="my-4 d-flex align-items-baseline">
             <div class="me-2">
-                <span class="fs-4">All Attendances</span>
+                <span class="fs-4">All Salaries</span>
                 <span class="fs-4 ms-1 text-muted">|</span>
             </div>
             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                 <x-bread-crumb>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Attendances
+                        Salary Lists
                     </li>
                 </x-bread-crumb>
             </nav>
         </div>
 
         <div class="mb-3">
-            @can('create_department')
-                <x-create-item link="{{ route('attendance.create') }}">Add</x-create-item>
+            @can('view_salary')
+                <x-create-item link="{{ route('salary.create') }}">Add</x-create-item>
             @endcan
         </div>
 
         <div class="col-12">
-            <div class="card shadow-sm dt-card mb-3">
+            <div class="card shadow-sm dt-card">
                 <div class="card-body">
-                    <h5 class="mb-3 fw-bold">All Attendances</h5>
-                    <table class="table table-hover table-striped w-100 py-3 att-table" id="dataTable">
+                    <table class="table table-hover table-striped w-100 py-3" id="dataTable">
                         <thead>
                             <th class="no-sort"></th>
-                            <th class="">#</th>
-                            <th class="">Name</th>
-                            <th class="">Employee ID</th>
-                            <th class="">Date</th>
-                            <th class="">Check-in time</th>
-                            <th class="">Check-out time</th>
-                            <th class="no-sort">Control</th>
+                            <th>Employee</th>
+                            <th>Month</th>
+                            <th>Year</th>
+                            <th>Amount (MMK)</th>
+                            <th>Contorl</th>
                             <th class="text-center hidden">Updated_at</th>
                         </thead>
                     </table>
@@ -54,35 +50,26 @@
     <script>
         $(document).ready(function() {
             var table = $('#dataTable').DataTable({
-                ajax: '{{ route('attendance.ssd') }}',
+                ajax: '{{ route('salary.ssd') }}',
                 columns: [{
                         data: 'plus-icon',
                         name: 'plus-icon',
-                        class: 'text-center'
-                    },
-                    {
-                        data: 'profile',
-                        name: 'profile'
                     },
                     {
                         data: 'employee',
-                        name: 'employee'
+                        name: 'employee',
                     },
                     {
-                        data: 'employee_id',
-                        name: 'employee_id'
+                        data: 'month',
+                        name: 'month',
                     },
                     {
-                        data: 'date',
-                        name: 'date',
+                        data: 'year',
+                        name: 'year',
                     },
                     {
-                        data: 'check_in',
-                        name: 'check_in',
-                    },
-                    {
-                        data: 'check_out',
-                        name: 'check_out',
+                        data: 'amount',
+                        name: 'amount',
                     },
                     {
                         data: 'action',
@@ -94,7 +81,7 @@
                     },
                 ],
                 order: [
-                    [4, "desc"]
+                    [6, "desc"]
                 ],
             });
 
@@ -112,10 +99,10 @@
                     confirmButtonText: "Yes, delete it!",
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire("Deleted!", "Your attendance has been deleted.", "success");
+                        Swal.fire("Deleted!", "Your file has been deleted.", "success");
                         $.ajax({
                             method: "DELETE",
-                            url: `/attendance/${id}`,
+                            url: `/salary/${id}`,
                         }).done(function(res) {
                             table.ajax.reload();
                         })

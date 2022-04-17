@@ -29,9 +29,10 @@
         <div class="col-12">
             <div class="card shadow-sm dt-card">
                 <div class="card-body">
-                    <table class="table table-hover table-striped w-100" id="dataTable">
+                    <table class="table table-hover table-striped w-100 att-table" id="dataTable">
                         <thead>
                             <th class="no-sort"></th>
+                            <th class="no-sort">#</th>
                             <th>Employee ID</th>
                             <th>Name</th>
                             <th>Phone</th>
@@ -57,6 +58,10 @@
                         data: 'plus-icon',
                         name: 'plus-icon',
                         class: 'text-center'
+                    },
+                    {
+                        data: 'profile_img',
+                        name: 'profile_img',
                     },
                     {
                         data: 'employee_id',
@@ -91,9 +96,9 @@
                         name: 'updated_at',
                     },
                 ],
-                order: [
-                    [4, "desc"]
-                ],
+                // order: [
+                //     [4, "desc"]
+                // ],
             });
 
             $(document).on('click', '.del-btn', function(e, id) {
