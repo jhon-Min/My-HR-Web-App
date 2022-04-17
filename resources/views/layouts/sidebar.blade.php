@@ -35,6 +35,12 @@
                     </x-menu-item>
                 @endcan
 
+                @can('view_salary')
+                    <x-menu-item link="{{ route('salary.index') }}" icon="fa-solid fa-circle-dollar-to-slot">
+                        Salaries
+                    </x-menu-item>
+                @endcan
+
                 @can('view_role')
                     <x-menu-item link="{{ route('role.index') }}" icon="fa-solid fa-users-gear">
                         Roles

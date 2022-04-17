@@ -12,6 +12,7 @@ use App\Http\Controllers\MyAttendanceController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SalaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,11 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/update-profile', [ProfileController::class, 'updateProfile'])->name('profile.update-profile');
 
-    Route::resource('role', RoleController::class);
+    Route::resource('/role', RoleController::class);
     Route::get('/role/datatable/ssd', [RoleController::class, 'ssd'])->name('role.ssd');
 
-    Route::resource('permission', PermissionController::class);
+    Route::resource('/permission', PermissionController::class);
     Route::get('/permission/datatable/ssd', [PermissionController::class, 'ssd'])->name('permission.ssd');
+
+    Route::resource('/salary', SalaryController::class)->except('show');
+    Route::get('/salary/datatable/ssd', [SalaryController::class, 'ssd'])->name('salary.ssd');
 
     Route::resource('/company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
 
