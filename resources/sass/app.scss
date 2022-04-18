@@ -17,6 +17,7 @@ $border-radius: 0px;
 @import './select2.css';
 @import './datatable-b5.css';
 @import "~bootstrap-pincode-input/css/bootstrap-pincode-input.css";
+@import '~dropzone/dist/dropzone.css';
 
 // ==== Custom Scss ====
 @import './sidebar';
@@ -77,6 +78,64 @@ $border-radius: 0px;
     padding: 1rem 0.5rem !important;
 }
 
+.preview_img img {
+    border-radius: 5px;
+    width: 100px;
+    object-fit: cover;
+    margin: 3px;
+}
+
+.emp-profile {
+    width: 90px;
+    height: 150px;
+    border-radius: 5px;
+}
+
+// Thumbanil
+.leader-thumb-1, .member-thumb-1{
+    width: 50px;
+    height: 50px;
+    border: 2px solid white;
+    border-radius: 10px;
+}
+
+.leader-thumb-2, .member-thumb-2{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin-left: -15px;
+}
+
+.member-thumb-2{
+    width: 30px;
+    height: 30px;
+}
+
+.leader-thumb-2:first-child{
+    margin-left: 0;
+}
+
+.member-thumb-2:first-child{
+    margin-left: 0;
+}
+
+.pdf-thumbnail {
+    background: #fff;
+    width: 60px;
+    height: 75px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 3px;
+    display: inline-block;
+    text-align: center;
+    color: #000;
+
+    i {
+        font-size: 30px;
+    }
+}
 
 
 

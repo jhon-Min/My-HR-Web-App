@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\CheckInOutController;
-use App\Http\Controllers\CompanyInfoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\HeadOfDepController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\MyAttendanceController;
-use App\Http\Controllers\PayRollController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalaryController;
+use App\Http\Controllers\PayRollController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HeadOfDepController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CheckInOutController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CompanyInfoController;
+use App\Http\Controllers\MyAttendanceController;
+use App\Http\Controllers\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +68,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payroll', [PayRollController::class, 'index'])->name('payroll.index');
     Route::get('/payroll/table', [PayRollController::class, 'payrollTable'])->name('payroll.table');
+
+    Route::get('/project/datatable/ssd', [ProjectController::class, 'ssd'])->name('project.ssd');
+    Route::resource('/project', ProjectController::class);
 
     // My Attendance and Payroll
     Route::get('/my-attendance/scan', [MyAttendanceController::class, 'scanQr'])->name('my-attendance.scanQr');

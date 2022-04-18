@@ -1,41 +1,44 @@
 @extends('layouts.app')
 
 @section('title')
-    Role Lists
+    Project Lists
 @endsection
 
 @section('content')
     <div class="row">
         <div class="my-4 d-flex align-items-baseline">
             <div class="me-2">
-                <span class="fs-4">Roles</span>
+                <span class="fs-4">Projects</span>
                 <span class="fs-4 ms-1 text-muted">|</span>
             </div>
             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                 <x-bread-crumb>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Role Lists
+                        Project Lists
                     </li>
                 </x-bread-crumb>
             </nav>
         </div>
 
         <div class="mb-3">
-            @can('view_role')
-                <x-create-item link="{{ route('role.create') }}">Add</x-create-item>
-            @endcan
-
+            <x-create-item link="{{ route('project.create') }}">Add</x-create-item>
         </div>
 
         <div class="col-12">
             <div class="card shadow-sm dt-card">
                 <div class="card-body">
-                    <table class="table table-hover table-striped w-100 py-3" id="dataTable">
+                    <table class="table table-hover table-striped w-100 att-table" id="dataTable">
                         <thead>
-                            <th class="">Role Name</th>
-                            <th class="w-50 ">Access Permissions</th>
+                            <th class="no-sort"></th>
+                            <th>Project Name</th>
+                            <th>Leaders</th>
+                            <th>Members</th>
+                            <th>Start Date</th>
+                            <th>Deadline</th>
+                            <th>Priority</th>
+                            <th>Status</th>
                             <th class="no-sort">Control</th>
-                            <th class="text-center hidden">Updated_at</th>
+                            <th class="hidden">Updated_at</th>
                         </thead>
                     </table>
                 </div>
@@ -48,26 +51,60 @@
     <script>
         $(document).ready(function() {
             var table = $('#dataTable').DataTable({
-                ajax: '{{ route('role.ssd') }}',
+                ajax: '{{ route('project.ssd') }}',
                 columns: [{
-                        data: 'name',
-                        name: 'name'
+                        data: 'plus-icon',
+                        name: 'plus-icon',
+                        class: 'text-center'
                     },
                     {
-                        data: 'permissions',
-                        name: 'permissions',
+                        data: 'title',
+                        name: 'title',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'leaders',
+                        name: 'leaders',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'members',
+                        name: 'members',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'start_date',
+                        name: 'start_date',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'deadline',
+                        name: 'deadline',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'priority',
+                        name: 'priority',
+                        class: 'text-center'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status',
+                        class: 'text-center'
                     },
                     {
                         data: 'action',
                         name: 'action',
+                        class: 'text-center'
                     },
                     {
                         data: 'updated_at',
                         name: 'updated_at',
+                        class: 'text-center'
                     },
                 ],
                 // order: [
-                //     [2, "desc"]
+                //     [4, "desc"]
                 // ],
             });
 
@@ -88,7 +125,7 @@
                         Swal.fire("Deleted!", "Your file has been deleted.", "success");
                         $.ajax({
                             method: "DELETE",
-                            url: `/role/${id}`,
+                            url: `/project/${id}`,
                         }).done(function(res) {
                             table.ajax.reload();
                         })

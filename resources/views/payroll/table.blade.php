@@ -64,7 +64,7 @@
                 <tr>
                     <td class="text-center">{{ $employee->employee_id }}</td>
                     <td class="text-center">
-                        <a href="{{ route('employee.show', $employee->id) }}">
+                        <a href="{{ route('employee.show', $employee->id) }}" class="text-dark">
                             {{ $employee->name }}
                         </a>
                     </td>
@@ -72,8 +72,8 @@
                     <td class="text-center">{{ $dayInMonth }}</td>
                     <td class="text-center">{{ $workingDays }}</td>
                     <td class="text-center">{{ $offDays }}</td>
-                    <td class="text-center">{{ $attendanceDay }}</td>
-                    <td class="text-center">{{ $leaveDays }}</td>
+                    <td class="text-center text-success">{{ $attendanceDay }}</td>
+                    <td class="text-center text-danger">{{ $leaveDays }}</td>
                     <td class="text-center">{{ number_format($perday) }}</td>
                     <td class="text-center">{{ number_format($total) }} Ks</td>
                 </tr>
