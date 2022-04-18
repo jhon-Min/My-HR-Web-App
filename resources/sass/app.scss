@@ -73,6 +73,10 @@ $border-radius: 0px;
     width: 40px;
 }
 
+.table-payroll :not(caption) > * > *{
+    padding: 1rem 0.5rem !important;
+}
+
 
 
 

@@ -14245,3 +14245,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 .profile-thumbnail {
   width: 40px;
 }
+
+.table-payroll :not(caption) > * > * {
+  padding: 1rem 0.5rem !important;
+}
