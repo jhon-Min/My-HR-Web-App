@@ -30,7 +30,7 @@ class StoreEmployee extends FormRequest
             'email' => 'required|unique:users,email',
             'password' => 'required|min:4|max:255',
             'pin_code' => 'required|min:6|max:6',
-            'nrc_number' => 'required|min:3',
+            'nrc_number' => 'required|min:3|unique:users,nrc_number',
             'gender' => 'required',
             'department' => 'required',
             'birthday' => 'required|date',

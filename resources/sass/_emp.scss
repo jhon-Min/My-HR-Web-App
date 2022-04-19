@@ -15,7 +15,13 @@
         }
     }
 
+    .pdf-form {
+        border: 1px solid #ced4da !important;
+    }
+
     .form-control[readonly]{
         background-color: transparent;
     }
 }
+
+

@@ -61,7 +61,56 @@
         <div class="col-12">
             <div class="card shadow-sm dt-card mb-3">
                 <div class="card-body">
-                    <h5 class="mb-3 fw-bold">{{ $user->name }}'s Attendances</h5>
+                    <div class="row mb-3">
+
+                        <div class="col-3">
+                            <div class="form-group mb-3">
+                                <select class="form-control" name="" id="select-month">
+                                    <option value="">---- Choose Month ----</option>
+                                    <option value="01" @if (now()->format('m') == '01') selected @endif>Jan</option>
+                                    <option value="02" @if (now()->format('m') == '02') selected @endif>Feb</option>
+                                    <option value="03" @if (now()->format('m') == '03') selected @endif>Mar</option>
+                                    <option value="04" @if (now()->format('m') == '04') selected @endif>Apr</option>
+                                    <option value="05" @if (now()->format('m') == '05') selected @endif>May</option>
+                                    <option value="06" @if (now()->format('m') == '06') selected @endif>Jun</option>
+                                    <option value="07" @if (now()->format('m') == '07') selected @endif>Jul</option>
+                                    <option value="08" @if (now()->format('m') == '08') selected @endif>Aug</option>
+                                    <option value="09" @if (now()->format('m') == '09') selected @endif>Sep</option>
+                                    <option value="10" @if (now()->format('m') == '10') selected @endif>Oct</option>
+                                    <option value="11" @if (now()->format('m') == '11') selected @endif>Nov</option>
+                                    <option value="12" @if (now()->format('m') == '12') selected @endif>Dec</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-3">
+                            <div class="form-group">
+                                <select name="" class="form-control" id="select-year">
+                                    <option value="">-- Please Choose (Year) --</option>
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <option value="{{ now()->subYears($i)->format('Y') }}"
+                                            @if (now()->format('Y') ==
+    now()->subYears($i)->format('Y')) selected @endif>
+                                            {{ now()->subYears($i)->format('Y') }}
+                                        </option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <button class="btn btn-primary w-100 search-btn">Search</button>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <h5 class="mb-2 fw-bold">Payroll</h5>
+                        <div class="payroll-table"></div>
+                    </div>
+
+                    <h5 class="mb-3 fw-bold">Attendance Records</h5>
+                    <div class="report-table mb-5"></div>
                     <table class="table table-hover table-striped w-100 py-3 att-table" id="dataTable">
                         <thead>
                             <th class="no-sort"></th>
@@ -75,6 +124,7 @@
                         </thead>
                     </table>
                 </div>
+
             </div>
         </div>
 
@@ -182,6 +232,45 @@
                     [4, "desc"]
                 ],
             });
+
+            // ======== Report Table From My Attendance Controller =========
+            reportTable()
+
+            function reportTable() {
+                var month = $('#select-month').val();
+                var year = $('#select-year').val();
+
+
+                $.ajax({
+                    url: `/my-attendance/report-table?month=${month}&year=${year}`,
+                    type: 'GET',
+                    success: function(res) {
+                        $('.report-table').html(res);
+                    }
+                })
+            }
+
+            // ======== Data Table From My Payroll Controller =========
+            payrollTable();
+
+            function payrollTable() {
+                var month = $('#select-month').val();
+                var year = $('#select-year').val();
+
+                $.ajax({
+                    url: `/my-payroll/table?month=${month}&year=${year}`,
+                    type: 'GET',
+                    success: function(res) {
+                        $('.payroll-table').html(res);
+                    }
+                })
+            }
+
+            $('.search-btn').on('click', function(e) {
+                e.preventDefault();
+                payrollTable();
+                reportTable()
+            })
         })
     </script>
 @endsection

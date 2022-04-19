@@ -104,7 +104,7 @@ class MyAttendanceController extends Controller
                 return Carbon::parse($each->check_out)->format('h:i:s a');
             })
             ->addColumn('profile', function ($each) {
-                return '<img src="' . $each->employee->profile_img_path() . '" alt="" class="profile-thumbnail border border-1 border-white shadow-sm rounded-circle" />';
+                return '<div class="header_img"><img src="' . $each->employee->profile_img_path() . '" alt="" class="border border-1 border-white shadow-sm" /></div>';
             })
             ->addColumn('employee', function ($each) {
                 return $each->employee ? $each->employee->name : '-';
@@ -117,6 +117,20 @@ class MyAttendanceController extends Controller
             })
             ->rawColumns(['profile', 'check_in'])
             ->make(true);
+    }
+
+    public function myReportTable(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->year;
+        $start = $year . '-' . $month . '-01';
+        $end = Carbon::parse($start)->endOfMonth()->format('Y-m-d');
+
+        $periods = new CarbonPeriod($start, $end);
+        $employees = User::orderBy('employee_id')->where('id', auth()->user()->id)->get();
+        $company = CompanyInfo::findOrFail(1);
+        $attendances = CheckInOut::whereMonth('date', $month)->whereYear('date', $year)->get();
+        return view('components.report-table', compact('periods', 'employees', 'company', 'attendances'));
     }
 
 }
