@@ -15,6 +15,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\MyAttendanceController;
+use App\Http\Controllers\MyPayrollController;
 use App\Http\Controllers\PhotoController;
 
 /*
@@ -72,9 +73,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/project/datatable/ssd', [ProjectController::class, 'ssd'])->name('project.ssd');
     Route::resource('/project', ProjectController::class);
 
-    // My Attendance and Payroll
+    // My Attendance, Report and Payroll
     Route::get('/my-attendance/scan', [MyAttendanceController::class, 'scanQr'])->name('my-attendance.scanQr');
     Route::post('/my-attendance/store-qr', [MyAttendanceController::class, 'storeQr'])->name('my-attendance.storeQr');
     Route::get('/my-attendance/datatable/ssd', [MyAttendanceController::class, 'ssd'])->name('my-attendance.ssd');
+
+    Route::get('/my-attendance/report-table', [MyAttendanceController::class, 'myReportTable'])->name('my-attendance.report-table');
+
+    Route::get('/my-payroll', [MyPayrollController::class, 'index'])->name('my-payroll.index');
+    Route::get('/my-payroll/table', [MyPayrollController::class, 'myPayrollTable'])->name('my-payroll.table');
 
 });

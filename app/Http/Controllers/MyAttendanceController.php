@@ -119,4 +119,18 @@ class MyAttendanceController extends Controller
             ->make(true);
     }
 
+    public function myReportTable(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->year;
+        $start = $year . '-' . $month . '-01';
+        $end = Carbon::parse($start)->endOfMonth()->format('Y-m-d');
+
+        $periods = new CarbonPeriod($start, $end);
+        $employees = User::orderBy('employee_id')->where('id', auth()->user()->id)->get();
+        $company = CompanyInfo::findOrFail(1);
+        $attendances = CheckInOut::whereMonth('date', $month)->whereYear('date', $year)->get();
+        return view('components.report-table', compact('periods', 'employees', 'company', 'attendances'));
+    }
+
 }
