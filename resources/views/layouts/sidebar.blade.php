@@ -56,9 +56,17 @@
                         Permissions
                     </x-menu-item>
                 @endcan
+
+                <x-menu-item link="{{ route('project.index') }}" icon="fa-solid fa-diagram-project">
+                    Projects
+                </x-menu-item>
             </div>
         </div>
-        <a href="{{ route('logout') }}" class="nav_link" onclick="event.preventDefault();
+
+    </nav>
+</div>
+
+{{-- <a href="{{ route('logout') }}" class="nav_link" onclick="event.preventDefault();
         document.getElementById('logout-form').submit();">
             <i class="fa-solid fa-right-from-bracket text-danger"></i>
             <span class="text-danger">SignOut</span>
@@ -66,6 +74,4 @@
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
             @csrf
-        </form>
-    </nav>
-</div>
+        </form> --}}

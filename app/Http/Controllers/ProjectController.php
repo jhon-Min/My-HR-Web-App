@@ -33,6 +33,12 @@ class ProjectController extends Controller
             // ->editColumn('description', function ($each) {
             //     return Str::limit($each->description, 50, ' ....');
             // })
+            ->editColumn('start_date', function($each){
+                return Carbon::parse($each->start_date)->format('d.m.Y');
+            })
+            ->editColumn('deadline', function($each){
+                return Carbon::parse($each->deadline)->format('d.m.Y');
+            })
             ->addColumn('leaders', function ($each) {
                 $output = "<div class=' position-absolute'>";
                 foreach ($each->leaders as $leader) {
@@ -154,7 +160,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        //
+        return view('project.show', compact('project'));
     }
 
     /**
@@ -165,7 +171,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        $employees = User::orderBy('name')->get();
+        return view('project.edit', compact('project', 'employees'));
     }
 
     /**
@@ -177,7 +184,43 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $photos = $project->photos;
+        if ($request->hasFile('photos')) {
+            $photos = [];
+            $photo_files = $request->file('photos');
+            foreach ($photo_files as $photo_file) {
+                $newName = 'project_' . uniqid() . '.' . $photo_file->getClientOriginalExtension();
+                Storage::disk('public')->put('project/' . $newName, file_get_contents($photo_file));
+                $photos[] = $newName;
+            }
+        }
+
+        $files = $project->files;
+        if ($request->hasFile('files')) {
+            $files = [];
+            $file_names = $request->file('files');
+            foreach ($file_names as $file_name) {
+                $newName = 'project_' . uniqid() . '.' . $file_name->getClientOriginalExtension();
+                Storage::disk('public')->put('project/' . $newName, file_get_contents($file_name));
+                $files[] = $newName;
+            }
+        }
+
+        $project->title = $request->title;
+        $project->description = $request->description;
+        $project->photos = $photos;
+        $project->files = $files;
+        $project->start_date = Carbon::parse($request->start_date)->format('Y-m-d');
+        $project->deadline = Carbon::parse($request->deadline)->format('Y-m-d');
+        $project->priority = $request->priority;
+        $project->status = $request->status;
+        $project->update();
+
+
+        $project->leaders()->sync($request->leaders);
+        $project->members()->sync($request->members);
+
+        return redirect()->route('project.index')->with('create_alert', ['icon' => 'success', 'title' => 'Successfully Updated', 'message' => $project->title . ' is successfully updated']);
     }
 
     /**
@@ -188,7 +231,21 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        if ($project->photos) {
+            foreach ($project->photos as $photo) {
+                Storage::disk('public')->delete('project/' . $photo);
+            }
+        }
+
+        if ($project->files) {
+            foreach ($project->files as $pdf) {
+                Storage::disk('public')->delete('project/' . $pdf);
+            }
+        }
+
+        $project->leaders()->detach();
+        $project->members()->detach();
+        $project->delete();
     }
 
 }

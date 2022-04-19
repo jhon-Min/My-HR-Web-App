@@ -2,11 +2,13 @@ window._ = require("lodash");
 import Dropzone from "dropzone";
 import QrScanner from "qr-scanner";
 import Swal from "sweetalert2/dist/sweetalert2";
+import Viewer from "viewerjs";
 
 try {
     window.$ = window.jQuery = require("jquery");
     window.Swal = Swal;
     window.QrScanner = QrScanner;
+    window.Viewer = Viewer;
     window.Dropzone = Dropzone;
     require("bootstrap");
 } catch (e) {}

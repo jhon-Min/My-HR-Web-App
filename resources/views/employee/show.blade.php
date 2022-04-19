@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Employee Lists
+    Employee Detail
 @endsection
 
 
@@ -9,54 +9,41 @@
     <div class="row">
         <div class="my-4 d-flex align-items-baseline">
             <div class="me-2">
-                <span class="fs-4">Profile</span>
+                <span class="fs-4">Employee</span>
                 <span class="fs-4 ms-1 text-muted">|</span>
             </div>
             <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
                 <x-bread-crumb>
                     <li class="breadcrumb-item active" aria-current="page">
-                        User Profile
+                        {{ $employee->name }}'s detail
                     </li>
                 </x-bread-crumb>
             </nav>
         </div>
 
         <div class="col-12 col-md-5 col-lg-4 mb-3 mb-md-0">
-            <form action="{{ route('profile.update-profile') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="card profile-card shadow">
-                    <div class="text-center">
-                        <div class="bg-dark py-5">
-                        </div>
-
-                        <div class="d-flex justify-content-center">
-                            <div class="profile-img shadow-sm" style="margin-top: -50px">
-                                <img src="{{ auth()->user()->profile_img_path() }}" id="profile" alt=" User Profile">
-                            </div>
-                        </div>
-
-
-                        <div>
-                            <i class="fa-solid fa-square-pen text-primary fs-4 profile-btn d-inline-block"></i>
-                        </div>
-
-                        <input type="file" name="profile_img" class="d-none" id="profile-input">
+            <div class="card profile-card shadow">
+                <div class="text-center">
+                    <div class="bg-dark py-5">
                     </div>
-                    <div class="card-body text-center mt-2">
-                        <h5 class="fw-bold text-secondary">{{ $user->name }}</h5>
-                        <p class="small mb-1">{{ $user->address }}</p>
-                        <p class="small mb-4">
-                            <i class="fa-solid fa-square-phone me-1 text-success"></i>
-                            {{ $user->phone }}
-                        </p>
 
-                        <div>
-                            <a href="{{ route('profile.index') }}" class="btn btn-sm btn-danger me-1">Cancel</a>
-                            <button class="btn btn-sm btn-primary px-4">Save</button>
+                    <div class="d-flex justify-content-center">
+                        <div class="profile-img shadow-sm" style="margin-top: -50px">
+                            <img src="{{ asset($employee->profile_img_path()) }}" alt=" User Profile">
                         </div>
                     </div>
+
                 </div>
-            </form>
+                <div class="card-body text-center mt-2">
+                    <h5 class="fw-bold text-secondary">{{ $employee->name }}</h5>
+                    <p class="small mb-1">{{ $employee->address }}</p>
+                    <p class="small mb-4">
+                        <i class="fa-solid fa-square-phone me-1 text-success"></i>
+                        {{ $employee->phone }}
+                    </p>
+
+                </div>
+            </div>
         </div>
 
         <div class="col-12 col-md-7 col-lg-8">
@@ -69,7 +56,7 @@
                                 <i class="fa-solid fa-id-card"></i>
                                 Employee ID
                             </p>
-                            <p class="">{{ $user->employee_id }}</p>
+                            <p class="">{{ $employee->employee_id }}</p>
                         </div>
 
                         <div class="col-6 col-md-3">
@@ -77,7 +64,7 @@
                                 <i class="fa-solid fa-envelope"></i>
                                 Email
                             </p>
-                            <p class="">{{ $user->email }}</p>
+                            <p class="">{{ $employee->email }}</p>
                         </div>
 
                         <div class="col-6 col-md-3">
@@ -85,7 +72,7 @@
                                 <i class="fa-solid fa-building-user"></i>
                                 Department
                             </p>
-                            <p class="">{{ $user->department->name }}</p>
+                            <p class="">{{ $employee->department->name }}</p>
                         </div>
 
                         <div class="col-6 col-md-3">
@@ -93,26 +80,27 @@
                                 <i class="fa-solid fa-calendar-day"></i>
                                 Joining Date
                             </p>
-                            <p class="">{{ \Carbon\Carbon::parse($user->date_of_join)->format('d M Y') }}
+                            <p class="">
+                                {{ \Carbon\Carbon::parse($employee->date_of_join)->format('d M Y') }}
                             </p>
                         </div>
                     </div>
                     <ul class="list-inline mt-3">
                         <li class="mb-1">
                             <span class="me-1 text-secondary small">NRC :</span>
-                            {{ $user->nrc_number }}
+                            {{ $employee->nrc_number }}
                         </li>
                         <li class="mb-1">
                             <span class="me-1 text-secondary small">Birthday :</span>
-                            {{ \Carbon\Carbon::parse($user->birthday)->format('d M Y') }}
+                            {{ \Carbon\Carbon::parse($employee->birthday)->format('d M Y') }}
                         </li>
                         <li>
                             <span class="me-1 text-secondary small">Gender :</span>
-                            {{ $user->gender }}
+                            {{ $employee->gender }}
                         </li>
                         <li class="mt-4">
                             <p class="small text-secondary mb-1">Your Roles</p>
-                            @foreach ($user->roles as $role)
+                            @foreach ($employee->roles as $role)
                                 <span class="me-1 badge rounded-pill bg-dark">#{{ $role->name }}</span>
                             @endforeach
                         </li>
@@ -121,21 +109,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <script>
-        let profile = document.querySelector("#profile");
-        let addBtn = document.querySelector(".profile-btn")
-        let input = document.querySelector("#profile-input");
-        addBtn.addEventListener("click", _ => input.click())
-        input.addEventListener("change", _ => {
-            let file = input.files[0];
-            let reader = new FileReader();
-            reader.onload = function() {
-                profile.src = reader.result;
-            }
-            reader.readAsDataURL(file);
-        })
-    </script>
 @endsection

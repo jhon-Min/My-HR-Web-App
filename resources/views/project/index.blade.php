@@ -55,57 +55,47 @@
                 columns: [{
                         data: 'plus-icon',
                         name: 'plus-icon',
-                        class: 'text-center'
                     },
                     {
                         data: 'title',
                         name: 'title',
-                        class: 'text-center'
                     },
                     {
                         data: 'leaders',
                         name: 'leaders',
-                        class: 'text-center'
                     },
                     {
                         data: 'members',
                         name: 'members',
-                        class: 'text-center'
                     },
                     {
                         data: 'start_date',
                         name: 'start_date',
-                        class: 'text-center'
                     },
                     {
                         data: 'deadline',
                         name: 'deadline',
-                        class: 'text-center'
                     },
                     {
                         data: 'priority',
                         name: 'priority',
-                        class: 'text-center'
                     },
                     {
                         data: 'status',
                         name: 'status',
-                        class: 'text-center'
                     },
                     {
                         data: 'action',
                         name: 'action',
-                        class: 'text-center'
                     },
                     {
                         data: 'updated_at',
                         name: 'updated_at',
-                        class: 'text-center'
                     },
                 ],
-                // order: [
-                //     [4, "desc"]
-                // ],
+                order: [
+                    [9, "desc"]
+                ],
             });
 
             $(document).on('click', '.del-btn', function(e, id) {

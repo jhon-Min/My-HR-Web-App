@@ -35,7 +35,7 @@ class EmployeeController extends Controller
                 }
             })
             ->editColumn('profile_img', function ($each) {
-                return '<img src="' . $each->profile_img_path() . '" alt="" class="profile-thumbnail border border-1 border-white shadow-sm rounded-circle" />';
+                return '<div class="header_img"><img src="' . $each->profile_img_path() . '" alt="" class="border border-1 border-white shadow-sm " /></div>';
             })
             ->addColumn('dept', function($each){
                 return $each->department ? $each->department->name : '-';
@@ -102,7 +102,7 @@ class EmployeeController extends Controller
 
     public function show(User $employee)
     {
-        return $employee;
+        return view('employee.show', compact('employee'));
     }
 
     public function edit(User $employee)
