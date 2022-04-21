@@ -65,12 +65,22 @@ mark {
        justify-content: start !important;
        margin-top: 25px;
    }
+
+//    .dataTables_paginate .page-item{
+//        display: none;
+//    }
+
 }
 
 // === Flat Time Picker ===
 .daterangepicker, .flatpickr-calendar{
     margin-top: -55px !important;
     z-index: 2000 !important;
+}
+
+// =========== Sweet Alert2 ============
+.swal2-title{
+    font-size: 20px !important;
 }
 
 

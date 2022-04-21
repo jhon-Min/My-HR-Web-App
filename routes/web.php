@@ -17,6 +17,7 @@ use App\Http\Controllers\CompanyInfoController;
 use App\Http\Controllers\MyAttendanceController;
 use App\Http\Controllers\MyPayrollController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/salary', SalaryController::class)->except('show');
 
     Route::resource('/company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
+
+    Route::resource('/task', TaskController::class);
 
     // Attendance and Payroll
     Route::get('/attendance/datatable/ssd', [AttendanceController::class, 'ssd'])->name('attendance.ssd');

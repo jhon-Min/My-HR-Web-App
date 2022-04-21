@@ -14660,6 +14660,10 @@ div.dataTables_wrapper div.dataTables_paginate {
   z-index: 2000 !important;
 }
 
+.swal2-title {
+  font-size: 20px !important;
+}
+
 .card {
   border-radius: 10px;
   border: none;
@@ -14731,8 +14735,8 @@ div.dataTables_wrapper div.dataTables_paginate {
 }
 
 .leader-thumb-1, .member-thumb-1 {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: 2px solid white;
   border-radius: 10px;
 }
@@ -14740,7 +14744,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 .leader-thumb-2, .member-thumb-2 {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
+  border-radius: 10px;
   border: 1px solid white;
   margin-left: -15px;
 }
