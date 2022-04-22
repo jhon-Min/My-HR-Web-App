@@ -472,6 +472,128 @@
                     closeOnSelect: true,
                 });
             })
+
+
+            // ========= Edit & Delete Process For Tasks ============
+            $(document).on('click', '.edit_task_btn', function(event) {
+                event.preventDefault();
+                var task = JSON.parse(atob($(this).data('task')));
+                var task_members = JSON.parse(atob($(this).data('task-members')));
+
+                var task_members_options = '';
+                leaders.forEach(function(leader) {
+                    task_members_options +=
+                        `<option value="${leader.id}" ${(task_members.includes(leader.id) ? 'selected' : '')}>${leader.name}</option>`;
+                });
+                members.forEach(function(member) {
+                    task_members_options +=
+                        `<option value="${member.id}" ${(task_members.includes(member.id) ? 'selected' : '')}>${member.name}</option>`;
+                });
+
+                Swal.fire({
+                    title: 'Edit Task',
+                    html: `
+                    <form id="edit_task_form" class="task-form">
+                        <input type="hidden" name="project_id" value="{{ $project->id }}" />
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Title</label>
+                            <input type="text" class="form-control" name="title" value="${task.title}" placeholder="Project Title">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Description</label>
+                            <textarea name="description"  class="form-control" rows="5">${task.description}</textarea>
+                        </div>
+
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Start Date</label>
+                            <input type="text" class="form-control select-date-task" name="start_date" value="${task.start_date}" placeholder="Start Date">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Deadline</label>
+                            <input type="text" class="form-control select-date-task"  value="${task.deadline}" name="deadline" placeholder="Deadline">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label for="" class="small">Members</label>
+                            <select class="form-control select-custom-multiple" name="members[]" multiple>
+                                <option value="">-- Please Choose --</option>
+                                ${task_members_options}
+                        </select>
+
+                        </div>
+
+                        <div class="mb-4 text-start">
+                            <label for="" class="small">Priority</label>
+                            <select name="priority" class="form-control">
+                                <option value="">-- Please Choose --</option>
+                                <option value="high" ${(task.priority == 'high' ? 'selected' : '')}>High</option>
+                                <option value="middle" ${(task.priority == 'middle' ? 'selected' : '')}>Middle</option>
+                                <option value="low" ${(task.priority == 'low' ? 'selected' : '')}>Low</option>
+                            </select>
+                        </div>
+                    </form>
+                `,
+                    showCancelButton: true,
+                    focusConfirm: true,
+                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirm',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form_data = $('#edit_task_form').serialize();
+                        $.ajax({
+                            url: `/task/${task.id}`,
+                            type: 'PUT',
+                            data: form_data,
+                            success: function(res) {
+                                taskRender();
+                            }
+                        });
+
+                        Swal.fire('Saved!', '', 'success')
+                    }
+                })
+
+                $(".select-date-task").flatpickr({
+                    dateFormat: "Y-m-d",
+                });
+
+                $('.select-custom-multiple').select2({
+                    theme: "bootstrap-5",
+                    width: '100%',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: true,
+                });
+
+            })
+
+
+            $(document).on('click', '.delete_task_btn', function(event) {
+                event.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire("Deleted!", "Your task has been deleted.", "success");
+                        $.ajax({
+                            method: "DELETE",
+                            url: `/task/${id}`,
+                        }).done(function(res) {
+                            taskRender();
+                        })
+                    }
+                });
+
+            })
+
         })
     </script>
 @endsection

@@ -1,6 +1,6 @@
 <div class="row my-4">
     <h5>Task</h5>
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card shadow-sm">
             <div class="card-header text-white fw-bold bg-warning">Pending</div>
             <div class="card-body alert-warning">
@@ -8,7 +8,30 @@
                     <div class="task-item mb-2">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span>{{ $task->title }}</span>
-                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                            <div class="dropdown">
+                                <div class="px-1" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                    aria-expanded="false" style="cursor: pointer">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                    <li>
+                                        <a class="dropdown-item edit_task_btn"
+                                            data-task="{{ base64_encode(json_encode($task)) }}"
+                                            data-task-members={{ base64_encode(json_encode(collect($task->members)->pluck('id')->toArray())) }}
+                                            href="#">
+                                            <i class="fa-solid fa-pen-to-square text-info me-1 fw-normal"></i>
+                                            Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item delete_task_btn" data-id="{{ $task->id }}" href="#">
+                                            <i class="fa-solid fa-trash-alt text-danger me-1 fw-normal"></i>
+                                            Delete
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -43,7 +66,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card shadow-sm">
             <div class="card-header text-white fw-bold bg-info">In Progress</div>
             <div class="card-body alert-info">
@@ -86,7 +109,7 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card shadow-sm">
             <div class="card-header text-white fw-bold bg-success">Complete</div>
             <div class="card-body alert-success">
