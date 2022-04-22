@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/company-info', CompanyInfoController::class)->only(['show', 'edit', 'update']);
 
+    Route::get('/task-data', [TaskController::class, 'taskData'])->name('task.data');
     Route::resource('/task', TaskController::class);
 
     // Attendance and Payroll

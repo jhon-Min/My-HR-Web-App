@@ -49,6 +49,12 @@
             border: 1px solid #ddd !important;
         }
 
+        .task-header-img {
+            width: 34px;
+            height: 34px;
+            margin-left: -15px
+        }
+
     </style>
 @endsection
 
@@ -168,127 +174,8 @@
         </div>
 
         {{-- Task Manager --}}
-        <div class="row my-4">
-            <h5>Task</h5>
-            <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-header text-white fw-bold bg-warning">Pending</div>
-                    <div class="card-body alert-warning">
-                        <div class="task-item mb-2">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>User Crud ရေးရန်</span>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="small mb-1">
-                                        <i class="fa-solid fa-clock"></i>
-                                        Sep 12
-                                    </p>
-                                    <p class="badge bg-danger rounded-pill mb-0">
-                                        High
-                                    </p>
-                                </div>
-                                <div class="header_img border border-1 border-secondary">
-                                    <img src="{{ auth()->user()->profile_img_path() }}" alt="">
-                                </div>
-                            </div>
-                        </div>
+        <div class="task-data"></div>
 
-                        <a href="" class="add-task-item text-center mt-4 bg-white shadow-sm py-1 w-100" id="addPendingBtn">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            Add Task
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-header text-white fw-bold bg-info">In Progress</div>
-                    <div class="card-body alert-info">
-                        <div class="task-item mb-2">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>User Crud ရေးရန်</span>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="small mb-1">
-                                        <i class="fa-solid fa-clock"></i>
-                                        Sep 12
-                                    </p>
-                                    <p class="badge bg-danger rounded-pill mb-0">
-                                        High
-                                    </p>
-                                </div>
-                                <div class="header_img border border-1 border-secondary">
-                                    <img src="{{ auth()->user()->profile_img_path() }}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="task-item mb-2">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>User Crud ရေးရန်</span>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="small mb-1">
-                                        <i class="fa-solid fa-clock"></i>
-                                        Sep 12
-                                    </p>
-                                    <p class="badge bg-danger rounded-pill mb-0">
-                                        High
-                                    </p>
-                                </div>
-                                <div class="header_img border border-1 border-secondary">
-                                    <img src="{{ auth()->user()->profile_img_path() }}" alt="">
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="" class="add-task-item text-center mt-4 bg-white shadow-sm py-1 w-100 ">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            Add Task
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4 mb-3">
-                <div class="card shadow-sm">
-                    <div class="card-header text-white fw-bold bg-success">Complete</div>
-                    <div class="card-body alert-success">
-                        <div class="task-item mb-2">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>User Crud ရေးရန်</span>
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <p class="small mb-1">
-                                        <i class="fa-solid fa-clock"></i>
-                                        Sep 12
-                                    </p>
-                                    <p class="badge bg-danger rounded-pill mb-0">
-                                        High
-                                    </p>
-                                </div>
-                                <div class="header_img border border-1 border-secondary">
-                                    <img src="{{ auth()->user()->profile_img_path() }}" alt="">
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="" class="add-task-item text-center mt-4 bg-white shadow-sm py-1 w-100">
-                            <i class="fa-solid fa-circle-plus"></i>
-                            Add Task
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection
 
@@ -296,25 +183,38 @@
     <script>
         $(document).ready(function() {
             new Viewer(document.getElementById('imgs'));
-        })
 
-        var leaders = @json($project->leaders);
-        var members = @json($project->members);
+            var project_id = "{{ $project->id }}";
+            var leaders = @json($project->leaders);
+            var members = @json($project->members);
 
-        $('#addPendingBtn').click(function(event) {
-            event.preventDefault();
+            // ========= Show task list call by ajax ============
+            function taskRender() {
+                $.ajax({
+                    url: `/task-data?project_id=${project_id}`,
+                    type: 'GET',
+                    success: function(res) {
+                        $('.task-data').html(res);
+                    }
+                })
+            }
+            taskRender();
 
-            var task_members_options = '';
-            leaders.forEach(function(leader) {
-                task_members_options += `<option value="${leader.id}">${leader.name}</option>`;
-            });
-            members.forEach(function(member) {
-                task_members_options += `<option value="${member.id}">${member.name}</option>`;
-            });
+            // ========= Pending Task Process ============
+            $(document).on('click', '#addPendingBtn', function(event) {
+                event.preventDefault();
 
-            Swal.fire({
-                title: 'Add Pending Task',
-                html: `
+                var task_members_options = '';
+                leaders.forEach(function(leader) {
+                    task_members_options += `<option value="${leader.id}">${leader.name}</option>`;
+                });
+                members.forEach(function(member) {
+                    task_members_options += `<option value="${member.id}">${member.name}</option>`;
+                });
+
+                Swal.fire({
+                    title: 'Add Pending Task',
+                    html: `
                     <form id="pending_task_form" class="task-form">
                         <input type="hidden" name="project_id" value="{{ $project->id }}" />
                         <input type="hidden" name="status" value="pending"/>
@@ -360,36 +260,218 @@
                         </div>
                     </form>
                 `,
-                showCancelButton: true,
-                focusConfirm: true,
-                confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirm',
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    var form_data = $('#pending_task_form').serialize();
-                    $.ajax({
-                        url: `/task`,
-                        type: 'POST',
-                        data: form_data,
-                        success: function(res) {
-                            console.log(res);
-                        }
-                    });
+                    showCancelButton: true,
+                    focusConfirm: true,
+                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirm',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form_data = $('#pending_task_form').serialize();
+                        $.ajax({
+                            url: `/task`,
+                            type: 'POST',
+                            data: form_data,
+                            success: function(res) {
+                                taskRender();
+                            }
+                        });
 
-                    Swal.fire('Saved!', '', 'success')
-                }
+                        Swal.fire('Saved!', '', 'success')
+                    }
+                })
+
+                $(".select-date").flatpickr({
+                    dateFormat: "d.m.Y",
+                });
+
+                $('.select-custom-multiple').select2({
+                    theme: "bootstrap-5",
+                    width: '100%',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: true,
+                });
             })
 
-            $(".select-date").flatpickr({
-                dateFormat: "d.m.Y",
-            });
+            // ========= In_Progress Task Process ============
+            $(document).on('click', '#addInProgressBtn', function(event) {
+                event.preventDefault();
 
-            $('.select-custom-multiple').select2({
-                theme: "bootstrap-5",
-                width: '100%',
-                placeholder: $(this).data('placeholder'),
-                closeOnSelect: true,
-            });
+                var task_members_options = '';
+                leaders.forEach(function(leader) {
+                    task_members_options += `<option value="${leader.id}">${leader.name}</option>`;
+                });
+                members.forEach(function(member) {
+                    task_members_options += `<option value="${member.id}">${member.name}</option>`;
+                });
+
+                Swal.fire({
+                    title: 'Add In Progress Task',
+                    html: `
+                    <form id="in_progress_task_form" class="task-form">
+                        <input type="hidden" name="project_id" value="{{ $project->id }}" />
+                        <input type="hidden" name="status" value="in_progress"/>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Project Title">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Description</label>
+                            <textarea name="description" class="form-control" rows="5"></textarea>
+                        </div>
+
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Start Date</label>
+                            <input type="text" class="form-control select-date" name="start_date" placeholder="Start Date">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Deadline</label>
+                            <input type="text" class="form-control select-date" name="deadline" placeholder="Deadline">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label for="" class="small">Members</label>
+                            <select class="form-control select-custom-multiple" name="members[]" multiple>
+                                <option value="">-- Please Choose --</option>
+                                ${task_members_options}
+                        </select>
+
+                        </div>
+
+                        <div class="mb-4 text-start">
+                            <label for="" class="small">Priority</label>
+                            <select name="priority" class="form-control">
+                                <option value="">-- Please Choose --</option>
+                                <option value="high">High</option>
+                                <option value="middle">Middle</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </form>
+                `,
+                    showCancelButton: true,
+                    focusConfirm: true,
+                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirm',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form_data = $('#in_progress_task_form').serialize();
+                        $.ajax({
+                            url: `/task`,
+                            type: 'POST',
+                            data: form_data,
+                            success: function(res) {
+                                taskRender();
+                            }
+                        });
+
+                        Swal.fire('Saved!', '', 'success')
+                    }
+                })
+
+                $(".select-date").flatpickr({
+                    dateFormat: "d.m.Y",
+                });
+
+                $('.select-custom-multiple').select2({
+                    theme: "bootstrap-5",
+                    width: '100%',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: true,
+                });
+            })
+
+            // ========= Complete Task Process ============
+            $(document).on('click', '#addCompleteBtn', function(event) {
+                event.preventDefault();
+
+                var task_members_options = '';
+                leaders.forEach(function(leader) {
+                    task_members_options += `<option value="${leader.id}">${leader.name}</option>`;
+                });
+                members.forEach(function(member) {
+                    task_members_options += `<option value="${member.id}">${member.name}</option>`;
+                });
+
+                Swal.fire({
+                    title: 'Add Complete Task',
+                    html: `
+                    <form id="complete_task_form" class="task-form">
+                        <input type="hidden" name="project_id" value="{{ $project->id }}" />
+                        <input type="hidden" name="status" value="complete"/>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Title</label>
+                            <input type="text" class="form-control" name="title" placeholder="Project Title">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Description</label>
+                            <textarea name="description" class="form-control" rows="5"></textarea>
+                        </div>
+
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Start Date</label>
+                            <input type="text" class="form-control select-date" name="start_date" placeholder="Start Date">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="small">Deadline</label>
+                            <input type="text" class="form-control select-date" name="deadline" placeholder="Deadline">
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label for="" class="small">Members</label>
+                            <select class="form-control select-custom-multiple" name="members[]" multiple>
+                                <option value="">-- Please Choose --</option>
+                                ${task_members_options}
+                        </select>
+
+                        </div>
+
+                        <div class="mb-4 text-start">
+                            <label for="" class="small">Priority</label>
+                            <select name="priority" class="form-control">
+                                <option value="">-- Please Choose --</option>
+                                <option value="high">High</option>
+                                <option value="middle">Middle</option>
+                                <option value="low">Low</option>
+                            </select>
+                        </div>
+                    </form>
+                `,
+                    showCancelButton: true,
+                    focusConfirm: true,
+                    confirmButtonText: '<i class="fa fa-thumbs-up"></i> Confirm',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var form_data = $('#complete_task_form').serialize();
+                        $.ajax({
+                            url: `/task`,
+                            type: 'POST',
+                            data: form_data,
+                            success: function(res) {
+                                taskRender();
+                            }
+                        });
+
+                        Swal.fire('Saved!', '', 'success')
+                    }
+                })
+
+                $(".select-date").flatpickr({
+                    dateFormat: "d.m.Y",
+                });
+
+                $('.select-custom-multiple').select2({
+                    theme: "bootstrap-5",
+                    width: '100%',
+                    placeholder: $(this).data('placeholder'),
+                    closeOnSelect: true,
+                });
+            })
         })
     </script>
 @endsection

@@ -9,7 +9,7 @@ try {
     window.Swal = Swal;
     window.QrScanner = QrScanner;
     window.Viewer = Viewer;
-    window.Dropzone = Dropzone;
+    // window.Dropzone = Dropzone;
     require("bootstrap");
 } catch (e) {}
 

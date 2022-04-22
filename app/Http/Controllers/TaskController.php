@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Task;
+use App\Models\Project;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Models\Task;
-use Carbon\Carbon;
 
 class TaskController extends Controller
 {
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function taskData(Request $request)
     {
-        //
+        $project = Project::with('tasks')->where('id', $request->project_id)->firstOrFail();
+
+        return view('components.task', compact('project'))->render();
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -43,5 +43,6 @@ class TaskController extends Controller
 
         return 'success';
     }
+
 
 }

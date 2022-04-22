@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
     public function ssd(Request $request)
     {
-        $projects = Project::with('leaders', 'members');
+        $projects = Project::with('leaders', 'members', 'tasks');
         return DataTables::of($projects)
             ->editColumn('updated_at', function ($each) {
                 return Carbon::parse($each->update_at)->format('Y-m-d H:i:s');
