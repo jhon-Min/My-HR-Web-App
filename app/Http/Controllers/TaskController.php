@@ -67,5 +67,47 @@ class TaskController extends Controller
         return 'success';
     }
 
+    public function taskDraggable(Request $request){
+
+        $project = Project::with('tasks')->where('id', $request->project_id)->firstOrFail();
+
+        if($request->pendingTaskBoard){
+            $pendingTaskBoard = explode(',', $request->pendingTaskBoard);
+            foreach($pendingTaskBoard as $key => $task_id){
+                $task = collect($project->tasks)->where('id', $task_id)->first();
+                if($task){
+                    $task->serial_number = $key;
+                    $task->status = 'pending';
+                    $task->update();
+                }
+            }
+        }
+
+        if($request->inProgressTaskBoard){
+            $inProgressTaskBoard = explode(',', $request->inProgressTaskBoard);
+            foreach($inProgressTaskBoard as $key => $task_id){
+                $task = collect($project->tasks)->where('id', $task_id)->first();
+                if($task){
+                    $task->serial_number = $key;
+                    $task->status = 'in_progress';
+                    $task->update();
+                }
+            }
+        }
+
+        if($request->completeTaskBoard){
+            $completeTaskBoard = explode(',', $request->completeTaskBoard);
+            foreach($completeTaskBoard as $key => $task_id){
+                $task = collect($project->tasks)->where('id', $task_id)->first();
+                if($task){
+                    $task->serial_number = $key;
+                    $task->status = 'complete';
+                    $task->update();
+                }
+            }
+        }
+
+        return 'success';
+    }
 
 }

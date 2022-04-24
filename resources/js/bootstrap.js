@@ -1,6 +1,7 @@
 window._ = require("lodash");
 import Dropzone from "dropzone";
 import QrScanner from "qr-scanner";
+import SortableMin from "sortablejs";
 import Swal from "sweetalert2/dist/sweetalert2";
 import Viewer from "viewerjs";
 
@@ -9,6 +10,7 @@ try {
     window.Swal = Swal;
     window.QrScanner = QrScanner;
     window.Viewer = Viewer;
+    window.Sortable = SortableMin;
     // window.Dropzone = Dropzone;
     require("bootstrap");
 } catch (e) {}

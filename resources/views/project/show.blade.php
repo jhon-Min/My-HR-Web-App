@@ -12,16 +12,9 @@
             border-radius: 15px;
         }
 
-        .alert-warning {
-            background-color: #fff3cd66;
-        }
-
-        .alert-info {
-            background-color: #cff4fc66;
-        }
-
-        .alert-success {
-            background-color: #d1e7dd66;
+        .ghost {
+            background: #eee !important;
+            border: 2px dashed #333 !important;
         }
 
         .task-item {
@@ -174,7 +167,11 @@
         </div>
 
         {{-- Task Manager --}}
-        <div class="task-data"></div>
+        <div class="card shadow mb-3">
+            <div class="card-body">
+                <div class="task-data"></div>
+            </div>
+        </div>
 
     </div>
 @endsection
@@ -188,6 +185,92 @@
             var leaders = @json($project->leaders);
             var members = @json($project->members);
 
+            function initSortable() {
+                var pendingTaskBoard = document.getElementById('pendingTaskBoard');
+                var inProgressTaskBoard = document.getElementById('inProgressTaskBoard');
+                var completeTaskBoard = document.getElementById('completeTaskBoard');
+
+                Sortable.create(pendingTaskBoard, {
+                    group: "taskBoard",
+                    ghostClass: "ghost",
+                    animation: 200,
+
+                    store: {
+                        set: function(sortable) {
+                            var order = sortable.toArray();
+                            localStorage.setItem('pendingTaskBoard', order.join(','));
+                        }
+                    },
+                    onSort: function(evt) {
+                        setTimeout(function() {
+                            var pendingTaskBoard = localStorage.getItem('pendingTaskBoard');
+                            $.ajax({
+                                url: `/task-draggable?project_id=${project_id}&pendingTaskBoard=${pendingTaskBoard}`,
+                                type: 'GET',
+                                success: function(res) {
+
+                                }
+                            });
+
+                        }, 1000);
+                    },
+                })
+
+                Sortable.create(inProgressTaskBoard, {
+                    group: "taskBoard",
+                    ghostClass: "ghost",
+                    animation: 200,
+
+                    store: {
+                        set: function(sortable) {
+                            var order = sortable.toArray();
+                            localStorage.setItem('inProgressTaskBoard', order.join(','));
+                        }
+                    },
+                    onSort: function(evt) {
+                        setTimeout(function() {
+                            var inProgressTaskBoard = localStorage.getItem(
+                                'inProgressTaskBoard');
+                            $.ajax({
+                                url: `/task-draggable?project_id=${project_id}&inProgressTaskBoard=${inProgressTaskBoard}`,
+                                type: 'GET',
+                                success: function(res) {
+                                    console.log(res)
+                                }
+                            });
+
+                        }, 1000);
+                    },
+                })
+
+                Sortable.create(completeTaskBoard, {
+                    group: "taskBoard",
+                    ghostClass: "ghost",
+                    animation: 200,
+
+                    store: {
+                        set: function(sortable) {
+                            var order = sortable.toArray();
+                            localStorage.setItem('completeTaskBoard', order.join(','));
+                        }
+                    },
+                    onSort: function(evt) {
+                        setTimeout(function() {
+                            var completeTaskBoard = localStorage.getItem(
+                                'completeTaskBoard');
+                            $.ajax({
+                                url: `/task-draggable?project_id=${project_id}&completeTaskBoard=${completeTaskBoard}`,
+                                type: 'GET',
+                                success: function(res) {
+                                    console.log(res)
+                                }
+                            });
+
+                        }, 1000);
+                    },
+                })
+            }
+
             // ========= Show task list call by ajax ============
             function taskRender() {
                 $.ajax({
@@ -195,6 +278,7 @@
                     type: 'GET',
                     success: function(res) {
                         $('.task-data').html(res);
+                        initSortable()
                     }
                 })
             }
