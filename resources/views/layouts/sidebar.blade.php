@@ -41,9 +41,11 @@
                     </x-menu-item>
                 @endcan
 
-                <x-menu-item icon="fa-solid fa-money-check-dollar" link="{{ route('payroll.index') }}">
-                    Payroll
-                </x-menu-item>
+                @can('view_payroll')
+                    <x-menu-item icon="fa-solid fa-money-check-dollar" link="{{ route('payroll.index') }}">
+                        Payroll
+                    </x-menu-item>
+                @endcan
 
                 @can('view_role')
                     <x-menu-item link="{{ route('role.index') }}" icon="fa-solid fa-users-gear">
@@ -57,9 +59,11 @@
                     </x-menu-item>
                 @endcan
 
-                <x-menu-item link="{{ route('project.index') }}" icon="fa-solid fa-diagram-project">
-                    Projects
-                </x-menu-item>
+                @can('view_project')
+                    <x-menu-item link="{{ route('project.index') }}" icon="fa-solid fa-diagram-project">
+                        Projects
+                    </x-menu-item>
+                @endcan
             </div>
         </div>
 

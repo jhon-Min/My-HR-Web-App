@@ -4,7 +4,7 @@
         <div class="card shadow-sm">
             <div class="card-header text-white fw-bold bg-warning">Pending</div>
             <div class="card-body alert-warning">
-                <div id="pendingTaskBoard">
+                <div id="pendingTaskBoard" ု>
                     @foreach (collect($project->tasks)->sortBy('serial_number')->where('status', 'pending')
     as $task)
                         <div class="task-item mb-2" data-id="{{ $task->id }}">

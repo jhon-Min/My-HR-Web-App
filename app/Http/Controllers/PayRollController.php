@@ -13,11 +13,13 @@ class PayRollController extends Controller
 {
     public function index()
     {
+        $this->checking('view_payroll');
         return view('payroll.index');
     }
 
     public function payrollTable(Request $request)
     {
+        $this->checking('view_payroll');
         $month = $request->month;
         $year = $request->year;
         $start = $year . '-' . $month . '-01';

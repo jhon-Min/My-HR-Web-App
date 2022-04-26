@@ -63,7 +63,7 @@
                 <div class="card-body">
                     <div class="row mb-3">
 
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="form-group mb-3">
                                 <select class="form-control" name="" id="select-month">
                                     <option value="">---- Choose Month ----</option>
@@ -84,7 +84,7 @@
                         </div>
 
 
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="form-group">
                                 <select name="" class="form-control" id="select-year">
                                     <option value="">-- Please Choose (Year) --</option>
@@ -99,7 +99,7 @@
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-4">
                             <button class="btn btn-primary w-100 search-btn">Search</button>
                         </div>
                     </div>

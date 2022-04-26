@@ -24,11 +24,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-4 col-md-3">
                             <input type="text" class="form-control" id="employee-name" placeholder="Employee Name">
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-4 col-md-3">
                             <div class="form-group mb-3">
                                 <select class="form-control" name="" id="select-month">
                                     <option value="">---- Choose Month ----</option>
@@ -49,7 +49,7 @@
                         </div>
 
 
-                        <div class="col-3">
+                        <div class="col-4 col-md-3">
                             <div class="form-group">
                                 <select name="" class="form-control" id="select-year">
                                     <option value="">-- Please Choose (Year) --</option>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-12 col-md-3">
                             <button class="btn btn-primary w-100 search-btn">Search</button>
                         </div>
                     </div>

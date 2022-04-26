@@ -20,11 +20,13 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        $this->checking('view_project');
         return view('project.index');
     }
 
     public function ssd(Request $request)
     {
+        $this->checking('view_project');
         $projects = Project::with('leaders', 'members', 'tasks');
         return DataTables::of($projects)
             ->editColumn('updated_at', function ($each) {
@@ -100,6 +102,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        $this->checking('create_project');
         $employees = User::orderBy('name')->get();
         return view('project.create', compact('employees'));
     }
@@ -113,6 +116,7 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
+        $this->checking('view_project');
         $photos = null;
         if ($request->hasFile('photos')) {
             $photos = [];
@@ -160,6 +164,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
+        $this->checking('view_project');
         return view('project.show', compact('project'));
     }
 
@@ -171,6 +176,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
+        $this->checking('edit_project');
         $employees = User::orderBy('name')->get();
         return view('project.edit', compact('project', 'employees'));
     }
@@ -184,6 +190,7 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
+        $this->checking('edit_project');
         $photos = $project->photos;
         if ($request->hasFile('photos')) {
             $photos = [];
@@ -231,6 +238,7 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $this->checking('delete_project');
         if ($project->photos) {
             foreach ($project->photos as $photo) {
                 Storage::disk('public')->delete('project/' . $photo);

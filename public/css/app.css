@@ -14652,6 +14652,10 @@ div.dataTables_wrapper div.dataTables_paginate {
     justify-content: start !important;
     margin-top: 25px;
   }
+
+  div.dataTables_wrapper div.dataTables_paginate ul.pagination li:not(:first-child):not(:last-child) {
+    display: none;
+  }
 }
 .daterangepicker, .flatpickr-calendar {
   margin-top: -55px !important;

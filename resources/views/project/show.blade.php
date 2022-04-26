@@ -251,15 +251,15 @@
                     store: {
                         set: function(sortable) {
                             var order = sortable.toArray();
-                            localStorage.setItem('completeTaskBoard', order.join(','));
+                            localStorage.setItem('completeTaskBoardု', order.join(','));
                         }
                     },
                     onSort: function(evt) {
                         setTimeout(function() {
-                            var completeTaskBoard = localStorage.getItem(
-                                'completeTaskBoard');
+                            var completeTaskBoardု = localStorage.getItem(
+                                'completeTaskBoardု');
                             $.ajax({
-                                url: `/task-draggable?project_id=${project_id}&completeTaskBoard=${completeTaskBoard}`,
+                                url: `/task-draggable?project_id=${project_id}&completeTaskBoardု=${completeTaskBoardု}`,
                                 type: 'GET',
                                 success: function(res) {
                                     console.log(res)

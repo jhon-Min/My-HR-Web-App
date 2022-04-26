@@ -40,6 +40,8 @@
    }
 }
 
+
+
 mark {
    background: orange;
    color: black;
@@ -65,6 +67,10 @@ mark {
        justify-content: start !important;
        margin-top: 25px;
    }
+
+    div.dataTables_wrapper div.dataTables_paginate ul.pagination li:not(:first-child):not(:last-child){
+        display: none;
+    }
 
 //    .dataTables_paginate .page-item{
 //        display: none;
