@@ -13,7 +13,7 @@ class PermissionController extends Controller
 {
     public function ssd(Request $request)
     {
-        // $this->checking('view_permission');
+        $this->checking('view_permission');
         $permission = Permission::query();
         return DataTables::of($permission)
             ->editColumn('updated_at', function ($each) {
@@ -38,19 +38,19 @@ class PermissionController extends Controller
 
     public function index()
     {
-        // $this->checking('view_permission');
+        $this->checking('view_permission');
         return view('permission.index');
     }
 
     public function create()
     {
-        // $this->checking('create_permission');
+        $this->checking('create_permission');
         return view('permission.create');
     }
 
     public function store(StorePermissionRequest $request)
     {
-        // $this->checking('create_permission');
+        $this->checking('create_permission');
         $permission = new Permission();
         $permission->name = $request->name;
         $permission->save();
@@ -60,13 +60,13 @@ class PermissionController extends Controller
 
     public function edit(Permission $permission)
     {
-        // $this->checking('edit_permission');
+        $this->checking('edit_permission');
         return view('permission.edit', compact('permission'));
     }
 
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        // $this->checking('edit_permission');
+        $this->checking('edit_permission');
         $permission->name = $request->name;
         $permission->update();
 
@@ -75,7 +75,7 @@ class PermissionController extends Controller
 
     public function destroy(Permission $permission)
     {
-        // $this->checking('delete_permission');
+        $this->checking('delete_permission');
         return $permission->delete();
     }
 }

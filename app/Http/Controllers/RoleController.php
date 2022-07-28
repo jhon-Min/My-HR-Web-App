@@ -14,7 +14,7 @@ class RoleController extends Controller
 {
     public function ssd(Request $request)
     {
-        // $this->checking('view_role');
+        $this->checking('view_role');
         $role = Role::query();
         return DataTables::of($role)
             ->editColumn('updated_at', function ($each) {
@@ -46,20 +46,20 @@ class RoleController extends Controller
 
     public function index()
     {
-        // $this->checking('view_role');
+        $this->checking('view_role');
         return view('role.index');
     }
 
     public function create()
     {
-        // $this->checking('create_role');
+        $this->checking('create_role');
         $permissions = Permission::all();
         return view('role.create', compact('permissions'));
     }
 
     public function Store(StoreRoleRequest $request)
     {
-        // $this->checking('create_role');
+        $this->checking('create_role');
         $role = new Role();
         $role->name = $request->name;
         $role->save();
@@ -72,7 +72,7 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
-        // $this->checking('edit_role');
+        $this->checking('edit_role');
         $old_permissions = $role->permissions->pluck('id')->toArray();
         $permissions = Permission::all();
         return view('role.edit', compact('role', 'old_permissions', 'permissions'));
@@ -80,7 +80,7 @@ class RoleController extends Controller
 
     public function update(UpdateRoleRequest $request, Role $role)
     {
-        // $this->checking('edit_role');
+        $this->checking('edit_role');
         $old_permissions = $role->permissions->pluck('name')->toArray();
         $role->name = $request->name;
         $role->update();
@@ -97,7 +97,7 @@ class RoleController extends Controller
 
     public function destroy(Role $role)
     {
-        // $this->checking('delete_role');
+        $this->checking('delete_role');
         return $role->delete();
     }
 }
